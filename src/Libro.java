@@ -1,4 +1,6 @@
-public class Libro extends Asignatura {
+import java.util.ArrayList;
+
+public class Libro extends Asignatura implements Comparable<Libro> {
 
     // Atributos:
 
@@ -57,6 +59,13 @@ public class Libro extends Asignatura {
 
     public String toStringPrestado() {
         return titulo+"\t\tFecha de préstamo: "+fechaPrestamo+"\n";
+    }
+
+    // compareTo
+
+    @Override
+    public int compareTo(Libro otroLibro) {
+        return this.titulo.compareToIgnoreCase(otroLibro.titulo);
     }
 
     // Métodos:

@@ -9,7 +9,7 @@ public class Utilidades {
         return sc;
     }
 
-    public int leerNumero(String mensaje, int min, int max) {
+    public static int leerNumero(String mensaje, int min, int max) {
         int resp=min-1;
         do {
             System.out.print(mensaje);
@@ -26,7 +26,7 @@ public class Utilidades {
         return resp;
     }
 
-    public boolean leerSiONo(String mensaje) {
+    public static boolean leerSiONo(String mensaje) {
         boolean resp=false;
         String m="";
         do {
@@ -40,12 +40,12 @@ public class Utilidades {
         return resp;
     }
 
-    public String leerCadena(String mensaje) {
+    public static String leerCadena(String mensaje) {
         System.out.print(mensaje);
         return sc.nextLine();
     }
 
-    public int leerNumPositivo(String mensaje) {
+    public static int leerNumPositivo(String mensaje) {
         int resp=-1;
         do {
             System.out.print(mensaje);
