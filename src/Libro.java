@@ -72,7 +72,7 @@ public class Libro extends Asignatura implements Comparable<Libro> {
 
     public void anadirEjemplares(int n) {
         ejemplares+=n;
-        System.out.println("Ahora hay en total "+ejemplares+" ejemplares.");
+        System.out.println("Ahora hay en total "+ejemplares+" ejemplares del libro "+titulo);
         System.out.println();
     }
 
@@ -94,6 +94,7 @@ public class Libro extends Asignatura implements Comparable<Libro> {
             resp=true;
         } else {
             System.out.println("No hay ningún ejemplar prestado de este libro.");
+            System.out.println();
         }
         return resp;
     }

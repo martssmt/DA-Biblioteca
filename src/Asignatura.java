@@ -45,6 +45,7 @@ public class Asignatura {
         }
         if (coincidencias.isEmpty()) {
             System.out.println("No se han encontrado coincidencias.");
+            System.out.println();
         } else resp=seleccionarLibro(coincidencias);
         return resp;
     }
@@ -57,6 +58,7 @@ public class Asignatura {
             System.out.println(i + ". " + coincidencias.get(i).getTitulo());
         }
         System.out.println(coincidencias.size()+". Repetir búsqueda");
+        System.out.println();
         resp=Utilidades.leerNumero("Seleccione el libro escogido: ",0,coincidencias.size());
         if (resp!=coincidencias.size()) select=coincidencias.get(resp);
         return select;
