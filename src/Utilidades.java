@@ -3,7 +3,13 @@ import java.util.Scanner;
 
 public class Utilidades {
 
-    public int leerNumero(Scanner sc, String mensaje, int min, int max) {
+    private static final Scanner sc = new Scanner(System.in);
+
+    public static Scanner getSc() {
+        return sc;
+    }
+
+    public int leerNumero(String mensaje, int min, int max) {
         int resp=min-1;
         do {
             System.out.print(mensaje);
@@ -20,7 +26,7 @@ public class Utilidades {
         return resp;
     }
 
-    public boolean leerSiONo(Scanner sc, String mensaje) {
+    public boolean leerSiONo(String mensaje) {
         boolean resp=false;
         String m="";
         do {
@@ -34,12 +40,12 @@ public class Utilidades {
         return resp;
     }
 
-    public String leerCadena(Scanner sc, String mensaje) {
+    public String leerCadena(String mensaje) {
         System.out.print(mensaje);
         return sc.nextLine();
     }
 
-    public int leerNumPositivo(Scanner sc, String mensaje) {
+    public int leerNumPositivo(String mensaje) {
         int resp=-1;
         do {
             System.out.print(mensaje);
