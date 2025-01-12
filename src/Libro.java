@@ -1,6 +1,6 @@
 import java.util.ArrayList;
 
-public class Libro extends Asignatura implements Comparable<Libro> {
+public class Libro implements Comparable<Libro> {
 
     // Atributos:
 

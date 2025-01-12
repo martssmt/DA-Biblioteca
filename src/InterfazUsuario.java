@@ -94,14 +94,24 @@ public class InterfazUsuario {
             Libro modificado;
             switch (opcion) {
                 case 1: // Añadir libro nuevo
-
+                    Asignatura asignatura;
+                    if (Utilidades.leerSiONo("¿Quieres añadir también una asignatura?")) {
+                        asignatura=inventario.crearAsignatura();
+                    } else {
+                        asignatura=inventario.buscarAsignatura();
+                    }
+                    if (asignatura!=null) {
+                        asignatura.crearLibro();
+                    }
                     break;
                 case 2: // Eliminar libro
                     modificado=busqueda();
-                    for (Asignatura asignatura:inventario.getAsignaturas()) {
-                        if (asignatura.getNombre().equals(modificado.getNombre())) {
-                            asignatura.getLibros().remove(modificado);
-                            break;
+                    for (Asignatura asignaturaEl:inventario.getAsignaturas()) {
+                        for (Libro libro: asignaturaEl.getLibros()) {
+                            if (libro.getTitulo().equals(modificado.getTitulo())) {
+                                asignaturaEl.getLibros().remove(modificado);
+                                break;
+                            }
                         }
                     }
                     break;
@@ -219,11 +229,11 @@ public class InterfazUsuario {
     public Libro busqueda() {
         Libro resp;
         if (Utilidades.leerSiONo("¿Quiere buscar el libro por asignaturas?: ")) {
-            Asignatura asignatura=Inventario.buscarAsignatura();
+            Asignatura asignatura=inventario.buscarAsignatura();
             ArrayList<Libro> todos=new ArrayList<>(asignatura.getLibros());
             resp=asignatura.seleccionarLibro(todos);
         } else {
-            resp=Inventario.buscarLibro();
+            resp=inventario.buscarLibro();
         }
         return resp; // Devuelve null si la búsqueda se ha interrumpido
     }

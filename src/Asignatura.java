@@ -9,6 +9,13 @@ public class Asignatura {
     private String nombre;
     private LinkedList<Libro> libros;
 
+    // Constructor:
+
+    public Asignatura (String nombre) {
+        this.nombre=nombre;
+        libros=new LinkedList<>();
+    }
+
     // Getters:
 
     public String getNombre() {
@@ -24,6 +31,35 @@ public class Asignatura {
     public void anadirLibro(Libro libro) {
         libros.add(libro);
         Collections.sort(libros);
+    }
+
+    public void crearLibro() {
+        String tit;
+        Libro nuevoLibro;
+        boolean repetir;
+        boolean esNuevo=true;
+        do {
+            repetir=false;
+            tit = Utilidades.leerCadena("Introduce el nombre del libro ('fin' para volver): ");
+            if (!tit.equalsIgnoreCase("fin")) {
+                for (Libro libro : libros) {
+                    if (libro.getTitulo().equalsIgnoreCase(tit)) {
+                        nuevoLibro = libro;
+                        esNuevo=false;
+                        if (Utilidades.leerSiONo("El libro ya existe, ¿quieres añadir ejemplares?")) {
+                            int num = Utilidades.leerNumPositivo("Introduzca el número de ejemplares a añadir: ");
+                            nuevoLibro.anadirEjemplares(num);
+                        } else repetir = true;
+                        break;
+                    }
+                }
+                if (esNuevo) {
+                    int num = Utilidades.leerNumPositivo("Introduzca el número de ejemplares a añadir: ");
+                    nuevoLibro=new Libro(tit,num);
+                    anadirLibro(nuevoLibro);
+                }
+            }
+        } while (repetir || !tit.equalsIgnoreCase("fin"));
     }
 
     /*

@@ -39,7 +39,23 @@ public class Inventario {
 
     // Métodos:
 
-    public static Asignatura buscarAsignatura() {
+    public Asignatura crearAsignatura() {
+        String nom=Utilidades.leerCadena("Introduce el nombre de la asignatura ('fin' para volver): ");
+        Asignatura resp=null;
+        if (!nom.equalsIgnoreCase("fin")) {
+            for (Asignatura asignatura : asignaturas) {
+                if (asignatura.getNombre().equalsIgnoreCase(nom)) {
+                    System.out.println("La asignatura ya existe. El libro se añadirá a ella.");
+                    resp = asignatura;
+                    break;
+                }
+            }
+            if (resp == null) resp = new Asignatura(nom);
+        }
+        return resp;
+    }
+
+    public Asignatura buscarAsignatura() {
         boolean volver=false;
         Asignatura resp=null;
         ArrayList<Asignatura> coincidencias=new ArrayList<>();
@@ -60,7 +76,7 @@ public class Inventario {
         return resp;
     }
 
-    public static Asignatura seleccionarAsignatura(ArrayList<Asignatura> coincidencias) {
+    public Asignatura seleccionarAsignatura(ArrayList<Asignatura> coincidencias) {
         Asignatura resp=null;
         System.out.println("\tResultados:");
         for (int i=0; i< coincidencias.size(); i++) {
@@ -73,7 +89,7 @@ public class Inventario {
         return resp;
     }
 
-    public static Libro buscarLibro() {
+    public Libro buscarLibro() {
         boolean volver=false;
         Libro resp=null;
         ArrayList<Libro> coincidencias=new ArrayList<>();
@@ -96,7 +112,7 @@ public class Inventario {
         return resp;
     }
 
-    public static Libro seleccionarLibro(ArrayList<Libro> lista) {
+    public Libro seleccionarLibro(ArrayList<Libro> lista) {
         Libro resp=null;
         System.out.println("\tResultados:");
         for (int i=0; i< lista.size(); i++) {
