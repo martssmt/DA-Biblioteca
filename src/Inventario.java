@@ -58,6 +58,7 @@ public class Inventario {
             System.out.println(i+". "+coincidencias.get(i).getNombre());
         }
         System.out.println(coincidencias.size()+". Volver");
+        System.out.println();
         int opcion=Utilidades.leerNumero("Seleccione la asignatura: ",0,coincidencias.size());
         if (opcion!=coincidencias.size()) resp= coincidencias.get(opcion);
         return resp;
