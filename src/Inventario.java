@@ -5,7 +5,7 @@ public class Inventario {
 
     // Atributos:
 
-    private LinkedList<Asignatura> asignaturas;
+    private static LinkedList<Asignatura> asignaturas;
 
     // Constructor:
 
@@ -13,7 +13,7 @@ public class Inventario {
         asignaturas=new LinkedList<>();
     }
 
-    // Métodos:
+    // toString:
 
     @Override
     public String toString() {
@@ -30,7 +30,9 @@ public class Inventario {
         return resp.toString();
     }
 
-    public Asignatura buscarAsignatura() {
+    // Métodos:
+
+    public static Asignatura buscarAsignatura() {
         boolean volver=false;
         Asignatura resp=null;
         ArrayList<Asignatura> coincidencias=new ArrayList<>();
@@ -51,7 +53,7 @@ public class Inventario {
         return resp;
     }
 
-    public Asignatura seleccionarAsignatura(ArrayList<Asignatura> coincidencias) {
+    public static Asignatura seleccionarAsignatura(ArrayList<Asignatura> coincidencias) {
         Asignatura resp=null;
         System.out.println("\tResultados:");
         for (int i=0; i< coincidencias.size(); i++) {
@@ -61,6 +63,42 @@ public class Inventario {
         System.out.println();
         int opcion=Utilidades.leerNumero("Seleccione la asignatura: ",0,coincidencias.size());
         if (opcion!=coincidencias.size()) resp= coincidencias.get(opcion);
+        return resp;
+    }
+
+    public static Libro buscarLibro() {
+        boolean volver=false;
+        Libro resp=null;
+        ArrayList<Libro> coincidencias=new ArrayList<>();
+        String texto;
+        do {
+            texto = Utilidades.leerCadena("Introduzca el nombre del libro ('fin' para volver): ");
+            if (!texto.equalsIgnoreCase("fin")) {
+                for (Asignatura asignatura : asignaturas) {
+                    for (Libro libro:asignatura.getLibros()) {
+                        if (libro.getTitulo().toLowerCase().contains(texto.toLowerCase())) {
+                            coincidencias.add(libro);
+                        }
+                    }
+                }
+                if (coincidencias.isEmpty())
+                    System.out.println("No se ha encontrado ninguna coincidencia. Vuelva a intentarlo.");
+            } else volver=true;
+        } while (coincidencias.isEmpty()&&!volver);
+        if (!volver) resp=seleccionarLibro(coincidencias);
+        return resp;
+    }
+
+    public static Libro seleccionarLibro(ArrayList<Libro> lista) {
+        Libro resp=null;
+        System.out.println("\tResultados:");
+        for (int i=0; i< lista.size(); i++) {
+            System.out.println(i+". "+lista.get(i).getTitulo());
+        }
+        System.out.println(lista.size()+". Volver");
+        System.out.println();
+        int opcion=Utilidades.leerNumero("Seleccione la asignatura: ",0,lista.size());
+        if (opcion!=lista.size()) resp= lista.get(opcion);
         return resp;
     }
 
