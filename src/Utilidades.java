@@ -119,7 +119,7 @@ public class Utilidades {
         do {
             System.out.print(mensaje);
             resp=sc.nextLine();
-            if (resp.length()==9) correcto = true;
+            if (resp.length()==9 && resp.matches("\\d{9}")) correcto = true;
             else System.out.println("Teléfono incorrecto. Vuélvalo a intentar.\n");
         } while (!correcto);
         return resp;
