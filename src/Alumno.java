@@ -1,6 +1,7 @@
 import java.util.ArrayList;
+import java.util.Collections;
 
-public class Alumno {
+public class Alumno implements Comparable<Alumno> {
 
     // Atributos:
 
@@ -53,6 +54,13 @@ public class Alumno {
         this.telefono = telefono;
     }
 
+    // compareTo
+
+    @Override
+    public int compareTo(Alumno otroAlumno) {
+        return this.nombre.compareToIgnoreCase(otroAlumno.nombre); // Orden alfabético por nombre
+    }
+
     // Métodos:
 
     public static Alumno crearAlumno() {
@@ -65,6 +73,7 @@ public class Alumno {
 
     public void prestar(Libro libro) {
         prestamos.add(libro);
+        Collections.sort(prestamos);
     }
 
     public boolean devolver(Libro libro) {

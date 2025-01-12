@@ -13,6 +13,13 @@ public class Inventario {
         asignaturas=new LinkedList<>();
     }
 
+    // Getters:
+
+    public LinkedList<Asignatura> getAsignaturas() {
+        return asignaturas;
+    }
+
+
     // toString:
 
     @Override

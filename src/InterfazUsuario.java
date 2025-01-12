@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.LinkedList;
 
 public class InterfazUsuario {
@@ -19,9 +20,108 @@ public class InterfazUsuario {
 
     // Menú
 
-    ////////
+    public void menu() {
+        int opcion;
+        String menu="\tMenú:\n";
+        menu+="1. Mostrar inventario\n";
+        menu+="2. Consultar inventario\n";
+        menu+="3. Modificar inventario\n";
+        menu+="4. Prestar libro\n";
+        menu+="5. Devolver libro\n";
+        menu+="6. Alumnos con préstamos\n";
+        menu+="7. Modificar datos de un alumno\n";
+        menu+="8. Terminar ejecución\n\n";
+        do {
+            System.out.print(menu);
+            opcion=Utilidades.leerNumero("Introduzca la opción deseada: ",1,8);
+            switch (opcion) {
+                case 1: // Mostrar inventario
+                    mostrarInventario();
+                    break;
+                case 2: // Consultar inventario
+                    consultarInventario();
+                    break;
+                case 3: // Modificar inventario
+                    modificarInventario();
+                    break;
+                case 4: // Prestar libro
+                    prestar();
+                    break;
+                case 5: // Devolver libro
+                    devolver();
+                    break;
+                case 6: // Alumnos con préstamos
+                    mostrarAlumnosConPrestamos();
+                    break;
+                case 7: // Modificar datos de un alumno
+                    modificarAlumnos();
+                    break;
+                case 8: // Terminar ejecución
+                    terminar();
+                    break;
+            }
+        } while (opcion!=8);
+        System.out.println();
+        System.out.println("Fin de la ejecución.");
+        System.out.println("\u00A9 2025 Delegación de Alumnos de ETSI Sistemas Informáticos (UPM)");
+    }
 
-    // 2. Prestar libro
+    // 1. Mostrar inventario
+
+    public void mostrarInventario() {
+
+    }
+
+    // 2. Consultar inventario
+
+    public void consultarInventario() {
+
+    }
+
+    // 3. Modificar inventario
+
+    public void modificarInventario() {
+        int opcion;
+        String menu="\tMenú:\n";
+        menu+="1. Añadir libro nuevo\n";
+        menu+="2. Eliminar libro\n";
+        menu+="3. Añadir ejemplares\n";
+        menu+="4. Eliminar ejemplares\n";
+        menu+="5. Volver\n";
+        do {
+            System.out.println(menu);
+            opcion=Utilidades.leerNumero("Introduzca la opción deseada: ", 1, 5);
+            Libro modificado;
+            switch (opcion) {
+                case 1: // Añadir libro nuevo
+
+                    break;
+                case 2: // Eliminar libro
+                    modificado=busqueda();
+                    for (Asignatura asignatura:inventario.getAsignaturas()) {
+                        if (asignatura.getNombre().equals(modificado.getNombre())) {
+                            asignatura.getLibros().remove(modificado);
+                            break;
+                        }
+                    }
+                    break;
+                case 3: // Añadir ejemplares
+                    modificado=busqueda();
+                    System.out.println("Actualmente hay "+modificado.getEjemplares()+" ejemplares de "+modificado.getTitulo()+", de los cuales "+modificado.getPrestados()+" están prestados.");
+                    System.out.println();
+                    int numAnadir=Utilidades.leerNumPositivo("Introduce el número de ejemplares a añadir: ");
+                    modificado.anadirEjemplares(numAnadir);
+                    break;
+                case 4: // Eliminar ejemplares
+                    modificado=busqueda();
+                    int numElim=Utilidades.leerNumPositivo("Introduce el número de ejemplares a eliminar: ");
+                    modificado.eliminarEjemplares(numElim);
+                    break;
+            }
+        } while (opcion!=5);
+    }
+
+    // 4. Prestar libro
 
     public void prestar() {
         System.out.print("Introduzca la fecha del día del préstamo (dd/mm/aaaa): ");
@@ -36,16 +136,47 @@ public class InterfazUsuario {
             }
         } else {
             alumno=Alumno.crearAlumno();
-        }
-        if (!interrumpido) {
-            Libro libroAPrestar=busqueda(fecha);
-            if (libroAPrestar==null) interrumpido=true;
-            else {
-                libroAPrestar.prestarLibro(fecha);
-                alumnosConPrestamos.add(alumno);
-                alumno.prestar(libroAPrestar);
+            for (Alumno alumnoConPrestamo:alumnosConPrestamos) {
+                if (alumno.getMatricula().equalsIgnoreCase(alumnoConPrestamo.getMatricula())) {
+                    System.out.println("El alumno ya está en el registro. Se le añadirá un libro más.");
+                    System.out.println();
+                    alumno=alumnoConPrestamo;
+                }
             }
         }
+        if (!interrumpido) {
+            Libro libroAPrestar=busqueda();
+            if (libroAPrestar!=null) {
+                Libro libroAIntroducirEnAlumno=libroAPrestar.prestarLibro(fecha);
+                alumnosConPrestamos.add(alumno);
+                Collections.sort(alumnosConPrestamos);
+                alumno.prestar(libroAIntroducirEnAlumno);
+            }
+        }
+    }
+
+    // 5. Devolver libro
+
+    public void devolver() {
+
+    }
+
+    // 6. Alumnos con préstamos
+
+    public void mostrarAlumnosConPrestamos() {
+
+    }
+
+    // 7. Modificar datos de un alumno
+
+    public void modificarAlumnos() {
+
+    }
+
+    // 8. Terminar ejecución
+
+    public void terminar() {
+
     }
 
     // Comunes y útiles
@@ -85,7 +216,7 @@ public class InterfazUsuario {
         return select;
     }
 
-    public Libro busqueda(String fecha) {
+    public Libro busqueda() {
         Libro resp;
         if (Utilidades.leerSiONo("¿Quiere buscar el libro por asignaturas?: ")) {
             Asignatura asignatura=Inventario.buscarAsignatura();

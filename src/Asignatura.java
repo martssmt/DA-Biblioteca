@@ -26,6 +26,7 @@ public class Asignatura {
         Collections.sort(libros);
     }
 
+    /*
     public boolean eliminarLibro() { //Devuelve false si no se ha encontrado un libro bajo ese titulo
         boolean resp=false;
         Libro aEliminar=buscarLibroEnAsignatura();
@@ -56,6 +57,8 @@ public class Asignatura {
         if (!volver) resp=seleccionarLibro(coincidencias);
         return resp;
     }
+
+     */
 
     public Libro seleccionarLibro(ArrayList<Libro> listaLibros) {
         Libro select=null;
