@@ -61,6 +61,17 @@ public class Alumno implements Comparable<Alumno> {
         return this.nombre.compareToIgnoreCase(otroAlumno.nombre); // Orden alfabético por nombre
     }
 
+    // toString() {
+
+    @Override
+    public String toString() {
+        String resp=nombre+"\n";
+        resp+="\tMatrícula: "+matricula+"\n";
+        resp+="\tCorreo: "+correo+"\n";
+        resp+="\tTeléfono: "+telefono+"\n";
+        return resp;
+    }
+
     // Métodos:
 
     public static Alumno crearAlumno() {

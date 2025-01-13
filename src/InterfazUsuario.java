@@ -187,7 +187,38 @@ public class InterfazUsuario {
     // 7. Modificar datos de un alumno
 
     public void modificarAlumnos() {
-
+        Alumno alumnoMod=buscarAlumno();
+        System.out.println();
+        String menu="\tMenú:\n";
+        menu+="1. Cambiar nombre\n";
+        menu+="2. Cambiar matrícula\n";
+        menu+="3. Cambiar correo\n";
+        menu+="4. Cambiar teléfono\n";
+        menu+="5. Volver\n";
+        int opcion;
+        do {
+            System.out.println(alumnoMod.toString());
+            System.out.println(menu);
+            opcion=Utilidades.leerNumero("Introduzca la opción deseada: ",1,5);
+            switch (opcion) {
+                case 1:
+                    String nom=Utilidades.leerCadena("Introduzca el nombre correcto: ");
+                    alumnoMod.setNombre(nom);
+                    break;
+                case 2:
+                    String matr=Utilidades.leerMatricula("Introduzca la matrícula correcta:");
+                    alumnoMod.setMatricula(matr);
+                    break;
+                case 3:
+                    String corr=Utilidades.leerCorreo("Introduzca el correo correcto: ");
+                    alumnoMod.setCorreo(corr);
+                    break;
+                case 4:
+                    String tel=Utilidades.leerTel("Introduzca el teléfono correcto: ");
+                    alumnoMod.setTelefono(tel);
+                    break;
+            }
+        } while (opcion!=5);
     }
 
     // 8. Terminar ejecución
