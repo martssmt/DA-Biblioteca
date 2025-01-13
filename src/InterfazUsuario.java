@@ -175,7 +175,44 @@ public class InterfazUsuario {
     // 5. Devolver libro
 
     public void devolver() {
-
+        Alumno alumno=buscarAlumno();
+        if (alumno!=null) {
+            System.out.println();
+            System.out.println("\t"+alumno.getNombre());
+            Libro libroADev=null;
+            for (int i=0; i<alumno.getPrestamos().size(); i++) {
+                System.out.println(i+". "+ alumno.getPrestamos().get(i).toStringPrestado());
+            }
+            System.out.println(alumno.getPrestamos().size()+". Volver");
+            System.out.println();
+            int opc=Utilidades.leerNumero("Introduzca el número del libro a devolver: ", 0, alumno.getPrestamos().size());
+            if (opc!=alumno.getPrestamos().size()) libroADev=alumno.getPrestamos().get(opc);
+            if (libroADev!=null) {
+                for (Alumno alumnoLista:alumnosConPrestamos) {
+                    if (alumnoLista.equals(alumno)) {
+                        alumnoLista.getPrestamos().remove(libroADev);
+                        if (alumnoLista.getPrestamos().isEmpty()) {
+                            alumnosConPrestamos.remove(alumnoLista);
+                            System.out.println("El alumno no tiene más préstamos, por lo que se le ha eliminado del sistema.");
+                            System.out.println();
+                        }
+                        boolean encontrado=false;
+                        for (Asignatura asignatura:inventario.getAsignaturas()) {
+                            for (Libro libro:asignatura.getLibros()) {
+                                if (libro.equals(libroADev)) {
+                                    if(libro.devolverLibro()) System.out.println("Libro devuelto con éxito.");
+                                    System.out.println();
+                                    encontrado=true;
+                                    break;
+                                }
+                            }
+                            if (encontrado) break;
+                        }
+                        break;
+                    }
+                }
+            }
+        }
     }
 
     // 6. Alumnos con préstamos
