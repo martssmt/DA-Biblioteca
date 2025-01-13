@@ -92,12 +92,13 @@ public class InterfazUsuario {
         String menu="\tMenú:\n";
         menu+="1. Añadir libro nuevo\n";
         menu+="2. Eliminar libro\n";
-        menu+="3. Añadir ejemplares\n";
-        menu+="4. Eliminar ejemplares\n";
-        menu+="5. Volver\n";
+        menu+="3. Cambiar nombre a un libro\n";
+        menu+="4. Añadir ejemplares\n";
+        menu+="5. Eliminar ejemplares\n";
+        menu+="6. Volver\n";
         do {
             System.out.println(menu);
-            opcion=Utilidades.leerNumero("Introduzca la opción deseada: ", 1, 5);
+            opcion=Utilidades.leerNumero("Introduzca la opción deseada: ", 1, 6);
             Libro modificado;
             switch (opcion) {
                 case 1: // Añadir libro nuevo
@@ -113,29 +114,51 @@ public class InterfazUsuario {
                     break;
                 case 2: // Eliminar libro
                     modificado=busqueda();
-                    for (Asignatura asignaturaEl:inventario.getAsignaturas()) {
-                        for (Libro libro: asignaturaEl.getLibros()) {
-                            if (libro.getTitulo().equals(modificado.getTitulo())) {
-                                asignaturaEl.getLibros().remove(modificado);
-                                break;
+                    boolean encontrado = false;
+                    if (modificado!=null) {
+                        for (Asignatura asignaturaEl : inventario.getAsignaturas()) {
+                            for (Libro libro : asignaturaEl.getLibros()) {
+                                if (libro.getTitulo().equals(modificado.getTitulo())) {
+                                    asignaturaEl.getLibros().remove(modificado);
+                                    encontrado = true;
+                                    break;
+                                }
                             }
+                            if (encontrado) break;
                         }
                     }
                     break;
-                case 3: // Añadir ejemplares
+                case 3: // Cambiar nombre a un libro
+                    modificado=busqueda();
+                    encontrado=false;
+                    if (modificado!=null) {
+                        String nuevoNom = Utilidades.leerCadena("Introduzca el título correcto: ");
+                        for (Asignatura asignaturaCam : inventario.getAsignaturas()) {
+                            for (Libro libro : asignaturaCam.getLibros()) {
+                                if (libro.getTitulo().equals(modificado.getTitulo())) {
+                                    libro.setTitulo(nuevoNom);
+                                    encontrado = true;
+                                    break;
+                                }
+                            }
+                            if (encontrado) break;
+                        }
+                    }
+                    break;
+                case 4: // Añadir ejemplares
                     modificado=busqueda();
                     System.out.println("Actualmente hay "+modificado.getEjemplares()+" ejemplares de "+modificado.getTitulo()+", de los cuales "+modificado.getPrestados()+" están prestados.");
                     System.out.println();
                     int numAnadir=Utilidades.leerNumPositivo("Introduce el número de ejemplares a añadir: ");
                     modificado.anadirEjemplares(numAnadir);
                     break;
-                case 4: // Eliminar ejemplares
+                case 5: // Eliminar ejemplares
                     modificado=busqueda();
                     int numElim=Utilidades.leerNumPositivo("Introduce el número de ejemplares a eliminar: ");
                     modificado.eliminarEjemplares(numElim);
                     break;
             }
-        } while (opcion!=5);
+        } while (opcion!=6);
     }
 
     // 4. Prestar libro
