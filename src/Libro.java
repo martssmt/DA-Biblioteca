@@ -67,6 +67,12 @@ public class Libro implements Comparable<Libro> {
         return this.titulo.compareToIgnoreCase(otroLibro.titulo);
     }
 
+    // equals
+
+    public boolean equals(Libro libro) {
+        return libro.getTitulo().equalsIgnoreCase(titulo);
+    }
+
     // Métodos:
 
     public void anadirEjemplares(int n) {
@@ -76,9 +82,16 @@ public class Libro implements Comparable<Libro> {
     }
 
     public void eliminarEjemplares(int n) {
-        ejemplares-=n;
-        System.out.println("Ahora hay en total "+ejemplares+" ejemplares.");
-        System.out.println();
+        if (n>(ejemplares-prestados)) {
+            System.out.println("El número introducido es mayor que el número de ejemplares disponibles en la biblioteca actualmente.");
+            if (Utilidades.leerSiONo("Si continúa, se pondrá el número de ejemplares al número de ejemplares prestados("+prestados+"), ¿está seguro?")) {
+                ejemplares=prestados;
+            }
+        } else {
+            ejemplares -= n;
+            System.out.println("Ahora hay en total " + ejemplares + " ejemplares.");
+            System.out.println();
+        }
     }
 
     public Libro prestarLibro (String fecha) {

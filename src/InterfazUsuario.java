@@ -24,8 +24,8 @@ public class InterfazUsuario {
         int opcion;
         String menu="\tMenú:\n";
         menu+="1. Mostrar inventario\n";
-        menu+="2. Consultar inventario\n";
-        menu+="3. Modificar inventario\n";
+        menu+="2. Modificar inventario\n";
+        menu+="3. Consultar libros del inventario\n";
         menu+="4. Prestar libro\n";
         menu+="5. Devolver libro\n";
         menu+="6. Alumnos con préstamos\n";
@@ -34,15 +34,16 @@ public class InterfazUsuario {
         do {
             System.out.print(menu);
             opcion=Utilidades.leerNumero("Introduzca la opción deseada: ",1,8);
+            System.out.println();
             switch (opcion) {
                 case 1: // Mostrar inventario
                     mostrarInventario();
                     break;
-                case 2: // Consultar inventario
-                    consultarInventario();
-                    break;
-                case 3: // Modificar inventario
+                case 2: // Modificar inventario
                     modificarInventario();
+                    break;
+                case 3: // Consultar libros del inventario
+                    consultarInventario();
                     break;
                 case 4: // Prestar libro
                     prestar();
@@ -79,13 +80,7 @@ public class InterfazUsuario {
         }
     }
 
-    // 2. Consultar inventario
-
-    public void consultarInventario() {
-
-    }
-
-    // 3. Modificar inventario
+    // 2. Modificar inventario
 
     public void modificarInventario() {
         int opcion;
@@ -130,20 +125,8 @@ public class InterfazUsuario {
                     break;
                 case 3: // Cambiar nombre a un libro
                     modificado=busqueda();
-                    encontrado=false;
-                    if (modificado!=null) {
-                        String nuevoNom = Utilidades.leerCadena("Introduzca el título correcto: ");
-                        for (Asignatura asignaturaCam : inventario.getAsignaturas()) {
-                            for (Libro libro : asignaturaCam.getLibros()) {
-                                if (libro.getTitulo().equals(modificado.getTitulo())) {
-                                    libro.setTitulo(nuevoNom);
-                                    encontrado = true;
-                                    break;
-                                }
-                            }
-                            if (encontrado) break;
-                        }
-                    }
+                    String nuevoNom = Utilidades.leerCadena("Introduzca el título correcto: ");
+                    modificado.setTitulo(nuevoNom);
                     break;
                 case 4: // Añadir ejemplares
                     modificado=busqueda();
@@ -154,11 +137,76 @@ public class InterfazUsuario {
                     break;
                 case 5: // Eliminar ejemplares
                     modificado=busqueda();
+                    System.out.println("Actualmente hay "+modificado.getEjemplares()+" ejemplares de "+modificado.getTitulo()+", de los cuales "+modificado.getPrestados()+" están prestados.");
+                    System.out.println();
                     int numElim=Utilidades.leerNumPositivo("Introduce el número de ejemplares a eliminar: ");
                     modificado.eliminarEjemplares(numElim);
                     break;
             }
         } while (opcion!=6);
+    }
+
+    // 3. Consultar libros del inventario
+
+    public void consultarInventario() {
+        Libro consulta=inventario.buscarLibro();
+        System.out.println(consulta.toString());
+        System.out.println();
+        if (consulta.getPrestados()>0) {
+            System.out.println("\tAlumnos que tienen en préstamo un ejemplar:");
+            for (Alumno alumno : alumnosConPrestamos) {
+                for (Libro libro : alumno.getPrestamos()) {
+                    if (consulta.equals(libro)) {
+                        System.out.println(alumno.getNombre() + " desde " + libro.getFechaPrestamo());
+                        break;
+                    }
+                }
+            }
+        }
+        String menu="\tMenú:\n";
+        menu+="1. Añadir ejemplares\n";
+        menu+="2. Eliminar ejemplares\n";
+        menu+="3. Cambiar nombre\n";
+        menu+="4. Mostrar datos completos\n";
+        menu+="5. Volver\n\n";
+        int opcion;
+        do {
+            System.out.println(menu);
+            opcion = Utilidades.leerNumero("Introduzca la opción deseada: ", 1, 5);
+            switch (opcion) {
+                case 1: // Añadir ejemplares
+                    System.out.println("Actualmente hay "+consulta.getEjemplares()+" ejemplares de "+consulta.getTitulo()+", de los cuales "+consulta.getPrestados()+" están prestados.");
+                    System.out.println();
+                    int numAnadir=Utilidades.leerNumPositivo("Introduce el número de ejemplares a añadir: ");
+                    consulta.anadirEjemplares(numAnadir);
+                    break;
+                case 2: // Eliminar ejemplares
+                    System.out.println("Actualmente hay "+consulta.getEjemplares()+" ejemplares de "+consulta.getTitulo()+", de los cuales "+consulta.getPrestados()+" están prestados.");
+                    System.out.println();
+                    int numElim=Utilidades.leerNumPositivo("Introduce el número de ejemplares a eliminar: ");
+                    consulta.eliminarEjemplares(numElim);
+                    break;
+                case 3: // Cambiar nombre
+                    String nuevoNom = Utilidades.leerCadena("Introduzca el título correcto: ");
+                    consulta.setTitulo(nuevoNom);
+                    break;
+                case 4: // Mostrar datos de nuevo
+                    System.out.println(consulta.toString());
+                    System.out.println();
+                    if (consulta.getPrestados()>0) {
+                        System.out.println("\tAlumnos que tienen en préstamo un ejemplar:");
+                        for (Alumno alumno : alumnosConPrestamos) {
+                            for (Libro libro : alumno.getPrestamos()) {
+                                if (consulta.equals(libro)) {
+                                    System.out.println(alumno.getNombre() + " desde " + libro.getFechaPrestamo());
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                    break;
+            }
+        } while (opcion!=5);
     }
 
     // 4. Prestar libro
