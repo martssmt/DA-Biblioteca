@@ -125,4 +125,16 @@ public class Utilidades {
         return resp;
     }
 
+    public static String leerCorreo(String mensaje) {
+        boolean correcto=false;
+        String resp="";
+        do {
+            System.out.print(mensaje);
+            resp=sc.nextLine();
+            if (resp.matches("@alumnos.upm.es$")||resp.matches("@upm.es$")) correcto = true;
+            else System.out.println("Correo incorrecto. Vuélvalo a intentar.\n");
+        } while (!correcto);
+        return resp;
+    }
+
 }
