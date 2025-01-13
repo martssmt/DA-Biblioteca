@@ -26,6 +26,18 @@ public class Asignatura {
         return libros;
     }
 
+    // toString
+
+    @Override
+    public String toString() {
+        StringBuilder resp= new StringBuilder("\t" + nombre + ":\n");
+        for (Libro libro:libros) {
+            resp.append(libro.toString());
+        }
+        resp.append("\n");
+        return resp.toString();
+    }
+
     // Metodos:
 
     public void anadirLibro(Libro libro) {

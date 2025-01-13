@@ -27,12 +27,7 @@ public class Inventario {
         StringBuilder resp= new StringBuilder();
         resp.append("\t\tBilioteca DA-ETSISI\n\n");
         for (Asignatura asignatura:asignaturas) {
-            resp.append(asignatura.getNombre());
-            resp.append("\n");
-            for (Libro libro:asignatura.getLibros()) {
-                resp.append(libro.toString());
-            }
-            resp.append("\n");
+            resp.append(asignatura.toString());
         }
         return resp.toString();
     }

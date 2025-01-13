@@ -69,7 +69,14 @@ public class InterfazUsuario {
     // 1. Mostrar inventario
 
     public void mostrarInventario() {
-
+        if (Utilidades.leerSiONo("¿Desea ver todo?")) {
+            System.out.println(inventario.toString());
+        } else {
+            Asignatura asigAVer=inventario.buscarAsignatura();
+            if (asigAVer!=null) {
+                System.out.println(asigAVer.toString());
+            }
+        }
     }
 
     // 2. Consultar inventario

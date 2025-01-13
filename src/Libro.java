@@ -51,7 +51,7 @@ public class Libro implements Comparable<Libro> {
 
     @Override
     public String toString() {
-        return "\t"+titulo+
+        return "\t\t"+titulo+
                 "\nEjemplares totales: "+ejemplares+
                 "\t\tEjemplares prestados: "+prestados+
                 "\t\tEjemplares disponibles: "+(ejemplares-prestados)+"\n";
