@@ -1,3 +1,5 @@
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedList;
@@ -342,7 +344,50 @@ public class InterfazUsuario {
     // 8. Terminar ejecución
 
     public void terminar() {
+        if (Utilidades.leerSiONo("¿Quiere guardar los cambios?")) {
+            guardar();
+        } else if (!Utilidades.leerSiONo("¿Está seguro de que no quiere guardar?")) {
+            guardar();
+        } else {
+            System.out.println("Los cambios NO se han guardado.");
+            System.out.println();
+        }
+    }
 
+    public void guardar() {
+        boolean archivoAbierto=false;
+        String fich;
+        while (!archivoAbierto) {
+            if (Utilidades.leerSiONo("¿Quiere crear una base de datos nueva?")) {
+                fich = Utilidades.leerFich("Introduce el nombre del fichero: ");
+            } else {
+                fich = Utilidades.leerFich("Introduce el path del fichero: ");
+            }
+            try (PrintWriter out=new PrintWriter(fich)){
+                archivoAbierto=true;
+                    // Guarda el inventario
+                for (Asignatura asignatura : inventario.getAsignaturas()) {
+                    out.println(asignatura.getNombre());
+                    for (Libro libro : asignatura.getLibros()) {
+                        out.println(libro.getTitulo() + ";" + libro.getEjemplares() + ";" + libro.getPrestados());
+                    }
+                    out.println("---");
+                }
+                    // Separador
+                out.println("------");
+                    // Guarda los alumnosConPrestamos
+                for (Alumno alumno : alumnosConPrestamos) {
+                    out.println(alumno.getNombre() + ";" + alumno.getMatricula() + ";" + alumno.getCorreo() + ";" + alumno.getTelefono());
+                    for (Libro libro : alumno.getPrestamos()) {
+                        out.println(libro.getTitulo() + ";" + libro.getFechaPrestamo());
+                    }
+                    out.println("----");
+                }
+            } catch (FileNotFoundException ex) {
+                System.out.println("ERROR AL BUSCAR EL ARCHIVO: " + ex.getMessage());
+                System.out.println("INTÉNTELO DE NUEVO\n");
+            }
+        }
     }
 
     // Comunes y útiles

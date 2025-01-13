@@ -46,6 +46,14 @@ public class Libro implements Comparable<Libro> {
         this.titulo = titulo;
     }
 
+    public void setEjemplares(int ejemplares) {
+        this.ejemplares = ejemplares;
+    }
+
+    public void setPrestados(int prestados) {
+        this.prestados = prestados;
+    }
+
     // toString
 
     @Override
