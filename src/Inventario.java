@@ -19,7 +19,6 @@ public class Inventario {
         return asignaturas;
     }
 
-
     // toString:
 
     @Override

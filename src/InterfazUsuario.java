@@ -16,7 +16,7 @@ public class InterfazUsuario {
         inventario=new Inventario();
     }
 
-    // Falta el constructor a partir de archivo
+            // Falta el constructor a partir de archivo
 
     // Menú
 
@@ -181,6 +181,16 @@ public class InterfazUsuario {
     // 6. Alumnos con préstamos
 
     public void mostrarAlumnosConPrestamos() {
+        System.out.println("Alumnos con libros prestados:\n\n");
+        for (Alumno alumno:alumnosConPrestamos) {
+            System.out.println("\t"+alumno.getNombre());
+            for (Libro libro:alumno.getPrestamos()) {
+                System.out.println(libro.toStringPrestado());
+            }
+            System.out.println();
+        }
+        System.out.println();
+        System.out.println();
 
     }
 

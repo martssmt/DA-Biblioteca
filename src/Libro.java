@@ -42,7 +42,6 @@ public class Libro implements Comparable<Libro> {
 
     // Setters:
 
-
     public void setTitulo(String titulo) {
         this.titulo = titulo;
     }
@@ -58,7 +57,7 @@ public class Libro implements Comparable<Libro> {
     }
 
     public String toStringPrestado() {
-        return titulo+"\t\tFecha de préstamo: "+fechaPrestamo+"\n";
+        return "\t\t"+titulo+"\t\tFecha de préstamo: "+fechaPrestamo;
     }
 
     // compareTo

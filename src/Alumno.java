@@ -36,6 +36,10 @@ public class Alumno implements Comparable<Alumno> {
         return telefono;
     }
 
+    public ArrayList<Libro> getPrestamos() {
+        return prestamos;
+    }
+
     // Setters:
 
     public void setNombre(String nombre) {
