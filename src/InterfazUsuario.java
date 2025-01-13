@@ -1,8 +1,11 @@
 import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedList;
+import java.util.Scanner;
 
 public class InterfazUsuario {
 
@@ -17,8 +20,6 @@ public class InterfazUsuario {
         alumnosConPrestamos=new LinkedList<>();
         inventario=new Inventario();
     }
-
-            // Falta el constructor a partir de archivo
 
     // Menú
 
@@ -376,18 +377,65 @@ public class InterfazUsuario {
                     // Separador
                 out.println("------");
                     // Guarda los alumnosConPrestamos
-                for (Alumno alumno : alumnosConPrestamos) {
-                    out.println(alumno.getNombre() + ";" + alumno.getMatricula() + ";" + alumno.getCorreo() + ";" + alumno.getTelefono());
-                    for (Libro libro : alumno.getPrestamos()) {
-                        out.println(libro.getTitulo() + ";" + libro.getFechaPrestamo());
+                if (!alumnosConPrestamos.isEmpty()) {
+                    for (Alumno alumno : alumnosConPrestamos) {
+                        out.println(alumno.getNombre() + ";" + alumno.getMatricula() + ";" + alumno.getCorreo() + ";" + alumno.getTelefono());
+                        for (Libro libro : alumno.getPrestamos()) {
+                            out.println(libro.getTitulo() + ";" + libro.getFechaPrestamo());
+                        }
+                        out.println("----");
                     }
-                    out.println("----");
                 }
             } catch (FileNotFoundException ex) {
                 System.out.println("ERROR AL BUSCAR EL ARCHIVO: " + ex.getMessage());
                 System.out.println("INTÉNTELO DE NUEVO\n");
             }
         }
+    }
+
+    // Cargar de un archivo
+
+    public static InterfazUsuario cargarDeArchivo(String fich) {
+        InterfazUsuario interfaz=new InterfazUsuario();
+        try (Scanner sc=new Scanner(new FileReader(fich))) {
+            String linea;
+                // Leer inventario
+            while (!(linea=sc.nextLine()).equals("------")) {
+                String nom =linea;
+                Asignatura asign=new Asignatura(nom);
+                while (!(linea=sc.nextLine()).equals("---")) {
+                    String[] datos=linea.split(";");
+                    String tit=datos[0];
+                    int ejempl=Integer.parseInt(datos[1]);
+                    int prest=Integer.parseInt(datos[2]);
+                    Libro libr=new Libro(tit,ejempl,prest);
+                    asign.anadirLibro(libr);
+                }
+                interfaz.inventario.anadirAsignatura(asign);
+            }
+                // Leer alumnosConPrestamos
+            while (sc.hasNextLine()) {
+                linea=sc.nextLine();
+                if (linea.isEmpty() || linea.equals("----")) continue;
+                String[] datos=linea.split(";");
+                String nom=datos[0];
+                String matr=datos[1];
+                String corr=datos[2];
+                String tel=datos[3];
+                Alumno alum=new Alumno(nom,matr,corr,tel);
+                while (!(linea=sc.nextLine()).equals("----")) {
+                    String[] datLib=linea.split(";");
+                    String tit=datLib[0];
+                    String fech=datLib[1];
+                    Libro libr=new Libro(tit,fech);
+                    alum.prestar(libr);
+                }
+                interfaz.alumnosConPrestamos.add(alum);
+            }
+        } catch (IOException ex) {
+            System.out.println("ERROR AL LEER EL FICHERO: "+ex.getMessage());
+        }
+        return interfaz;
     }
 
     // Comunes y útiles

@@ -17,6 +17,12 @@ public class Libro implements Comparable<Libro> {
         prestados=0;
     }
 
+    public Libro(String titulo, int ejemplares, int prestados) {
+        this.titulo=titulo;
+        this.ejemplares=ejemplares;
+        this.prestados=prestados;
+    }
+
     public Libro(String titulo, String fechaPrestamo) {
         this.titulo=titulo;
         this.fechaPrestamo=fechaPrestamo;
@@ -44,14 +50,6 @@ public class Libro implements Comparable<Libro> {
 
     public void setTitulo(String titulo) {
         this.titulo = titulo;
-    }
-
-    public void setEjemplares(int ejemplares) {
-        this.ejemplares = ejemplares;
-    }
-
-    public void setPrestados(int prestados) {
-        this.prestados = prestados;
     }
 
     // toString

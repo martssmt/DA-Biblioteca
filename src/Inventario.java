@@ -33,6 +33,10 @@ public class Inventario {
 
     // Métodos:
 
+    public void anadirAsignatura(Asignatura asignatura) {
+        asignaturas.add(asignatura);
+    }
+
     public Asignatura crearAsignatura() {
         String nom=Utilidades.leerCadena("Introduce el nombre de la asignatura ('fin' para volver): ");
         Asignatura resp=null;
