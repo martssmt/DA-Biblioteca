@@ -137,4 +137,11 @@ public class Utilidades {
         return resp;
     }
 
+    public static String leerFich(String mensaje) {
+        System.out.print(mensaje);
+        String resp=sc.nextLine();
+        if (!resp.endsWith(":txt")) resp+=".txt";
+        return resp;
+    }
+
 }
