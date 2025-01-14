@@ -6,16 +6,16 @@ public class Alumno implements Comparable<Alumno> {
     // Atributos:
 
     private String nombre, matricula, correo, telefono;
-    private ArrayList<Libro> prestamos;
+    private final ArrayList<Libro> prestamos;
 
     // Constructor:
 
-    public Alumno (String nombre, String matricula, String correo, String telefono) {
-        this.nombre=nombre;
-        this.matricula=matricula;
-        this.correo=correo;
-        this.telefono=telefono;
-        prestamos=new ArrayList<>();
+    public Alumno(String nombre, String matricula, String correo, String telefono) {
+        this.nombre = nombre;
+        this.matricula = matricula;
+        this.correo = correo;
+        this.telefono = telefono;
+        prestamos = new ArrayList<>();
     }
 
     // Getters:
@@ -62,28 +62,34 @@ public class Alumno implements Comparable<Alumno> {
 
     @Override
     public int compareTo(Alumno otroAlumno) {
-        return this.nombre.compareToIgnoreCase(otroAlumno.nombre); // Orden alfabético por nombre
+        return this.nombre.compareToIgnoreCase(otroAlumno.nombre);
+    }
+
+    // equals
+
+    public boolean equals(Alumno otroAlumno) {
+        return this.matricula.equals(otroAlumno.matricula);
     }
 
     // toString() {
 
     @Override
     public String toString() {
-        String resp=nombre+"\n";
-        resp+="\tMatrícula: "+matricula+"\n";
-        resp+="\tCorreo: "+correo+"\n";
-        resp+="\tTeléfono: "+telefono+"\n";
+        String resp = nombre + "\n";
+        resp += "\tMatrícula: " + matricula + "\n";
+        resp += "\tCorreo: " + correo + "\n";
+        resp += "\tTeléfono: " + telefono + "\n";
         return resp;
     }
 
     // Métodos:
 
     public static Alumno crearAlumno() {
-        String nom=Utilidades.leerCadena("Introduzca el nombre: ");
-        String matr=Utilidades.leerMatricula("Introduzca la matricula: ");
-        String correo=Utilidades.leerCadena("Introduzca el correo institucional (sin @alumnos.upm.es): ");
-        String telef=Utilidades.leerTel("Introduzca el teléfono: ");
-        return new Alumno(nom,matr,correo,telef);
+        String nom = Utilidades.leerCadena("Introduzca el nombre: ");
+        String matr = Utilidades.leerMatricula("Introduzca la matricula: ");
+        String correo = Utilidades.leerCorreo("Introduzca el correo institucional: ");
+        String telef = Utilidades.leerTel("Introduzca el teléfono: ");
+        return new Alumno(nom, matr, correo, telef);
     }
 
     public void prestar(Libro libro) {

@@ -5,12 +5,8 @@ public class Utilidades {
 
     private static final Scanner sc = new Scanner(System.in);
 
-    public static Scanner getSc() {
-        return sc;
-    }
-
     public static int leerNumero(String mensaje, int min, int max) {
-        int resp=min-1;
+        int resp;
         do {
             System.out.print(mensaje);
             try {
@@ -20,23 +16,23 @@ public class Utilidades {
             } catch (InputMismatchException ex) {
                 sc.nextLine();
                 System.out.println("Entrada no válida. Vuelva a intentarlo.\n");
-                resp=min-1;
+                resp = min - 1;
             }
-        } while (resp<min||resp>max);
+        } while (resp < min || resp > max);
         return resp;
     }
 
     public static boolean leerSiONo(String mensaje) {
-        boolean resp=false;
-        String m="";
+        boolean resp = false;
+        String m = "";
         do {
-            System.out.print(mensaje+ "('S' para SÍ, 'N' para NO): ");
-            m=sc.nextLine();
-            if (!m.equalsIgnoreCase("S")&&!m.equalsIgnoreCase("N")) {
+            System.out.print(mensaje + " ('S' para SÍ, 'N' para NO): ");
+            m = sc.nextLine();
+            if (!m.equalsIgnoreCase("S") && !m.equalsIgnoreCase("N")) {
                 System.out.println("Cadena no reconocida como posible respuesta. Vuelva a introducirla.\n");
             }
-        } while (!m.equalsIgnoreCase("S")&&!m.equalsIgnoreCase("N"));
-        if (m.equalsIgnoreCase("S")) resp=true; // TRUE será la respuesta 'SI'
+        } while (!m.equalsIgnoreCase("S") && !m.equalsIgnoreCase("N"));
+        if (m.equalsIgnoreCase("S")) resp = true; // TRUE será la respuesta 'SI'
         return resp;
     }
 
@@ -46,30 +42,30 @@ public class Utilidades {
     }
 
     public static int leerNumPositivo(String mensaje) {
-        int resp=-1;
+        int resp;
         do {
             System.out.print(mensaje);
             try {
-                resp=sc.nextInt();
+                resp = sc.nextInt();
                 sc.nextLine(); // Limpia el buffer
-                if (resp<0) System.out.println("Número fuera del rango. Vuelva a introducirlo.");
+                if (resp < 0) System.out.println("Número fuera del rango. Vuelva a introducirlo.");
             } catch (InputMismatchException ex) {
                 sc.nextLine();
                 System.out.println("Entrada no válida. Vuelva a intentarlo.\n");
-                resp=-1;
+                resp = -1;
             }
-        } while (resp<0);
+        } while (resp < 0);
         return resp;
     }
 
     public static String leerFecha(String mensaje) {
-        boolean correcto=false;
-        String resp="";
+        boolean correcto = false;
+        String resp = "";
         do {
             System.out.print(mensaje);
-            resp=sc.nextLine();
-            String[] comprobar=resp.split("/");
-            if (comprobar.length!=3) {
+            resp = sc.nextLine();
+            String[] comprobar = resp.split("/");
+            if (comprobar.length != 3) {
                 try {
                     int dia = Integer.parseInt(comprobar[0]);
                     int mes = Integer.parseInt(comprobar[1]);
@@ -91,7 +87,8 @@ public class Utilidades {
                                 break;
                         }
                     }
-                } catch (NumberFormatException _) {}
+                } catch (NumberFormatException _) {
+                }
             }
             if (!correcto) System.out.println("Fecha incorrecta. Vuelva a intentarlo\n");
         } while (!correcto);
@@ -99,11 +96,11 @@ public class Utilidades {
     }
 
     public static String leerMatricula(String mensaje) {
-        boolean correcto=false;
-        String resp="";
+        boolean correcto = false;
+        String resp = "";
         do {
             System.out.print(mensaje);
-            resp=sc.nextLine();
+            resp = sc.nextLine();
             if (resp.matches("[a-zA-Z]{2}\\d{4}")) {  // Dos letras seguidas de cuatro dígitos
                 correcto = true;
             } else {
@@ -114,24 +111,24 @@ public class Utilidades {
     }
 
     public static String leerTel(String mensaje) {
-        boolean correcto=false;
-        String resp="";
+        boolean correcto = false;
+        String resp = "";
         do {
             System.out.print(mensaje);
-            resp=sc.nextLine();
-            if (resp.length()==9 && resp.matches("\\d{9}")) correcto = true;
+            resp = sc.nextLine();
+            if (resp.length() == 9 && resp.matches("\\d{9}")) correcto = true;  // Nueve dígitos
             else System.out.println("Teléfono incorrecto. Vuélvalo a intentar.\n");
         } while (!correcto);
         return resp;
     }
 
     public static String leerCorreo(String mensaje) {
-        boolean correcto=false;
-        String resp="";
+        boolean correcto = false;
+        String resp = "";
         do {
             System.out.print(mensaje);
-            resp=sc.nextLine();
-            if (resp.matches("@alumnos.upm.es$")||resp.matches("@upm.es$")) correcto = true;
+            resp = sc.nextLine();
+            if (resp.matches("@alumnos.upm.es$") || resp.matches("@upm.es$")) correcto = true;  // Acaba en esas cadenas
             else System.out.println("Correo incorrecto. Vuélvalo a intentar.\n");
         } while (!correcto);
         return resp;
@@ -139,8 +136,8 @@ public class Utilidades {
 
     public static String leerFich(String mensaje) {
         System.out.print(mensaje);
-        String resp=sc.nextLine();
-        if (!resp.endsWith(":txt")) resp+=".txt";
+        String resp = sc.nextLine();
+        if (!resp.endsWith(":txt")) resp += ".txt";
         return resp;
     }
 

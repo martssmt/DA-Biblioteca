@@ -2,18 +2,18 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedList;
 
-public class Asignatura {
+public class Asignatura implements Comparable<Asignatura>{
 
     // Atributos:
 
-    private String nombre;
-    private LinkedList<Libro> libros;
+    private final String nombre;
+    private final LinkedList<Libro> libros;
 
     // Constructor:
 
-    public Asignatura (String nombre) {
-        this.nombre=nombre;
-        libros=new LinkedList<>();
+    public Asignatura(String nombre) {
+        this.nombre = nombre;
+        libros = new LinkedList<>();
     }
 
     // Getters:
@@ -30,12 +30,19 @@ public class Asignatura {
 
     @Override
     public String toString() {
-        StringBuilder resp= new StringBuilder("\t" + nombre + ":\n");
-        for (Libro libro:libros) {
+        StringBuilder resp = new StringBuilder("\t" + nombre + ":\n");
+        for (Libro libro : libros) {
             resp.append(libro.toString());
         }
         resp.append("\n");
         return resp.toString();
+    }
+
+    // compareTo
+
+    @Override
+    public int compareTo(Asignatura otraAsignatura) {
+        return this.nombre.compareToIgnoreCase(otraAsignatura.nombre);
     }
 
     // Metodos:
@@ -49,15 +56,15 @@ public class Asignatura {
         String tit;
         Libro nuevoLibro;
         boolean repetir;
-        boolean esNuevo=true;
+        boolean esNuevo = true;
         do {
-            repetir=false;
+            repetir = false;
             tit = Utilidades.leerCadena("Introduce el nombre del libro ('fin' para volver): ");
             if (!tit.equalsIgnoreCase("fin")) {
                 for (Libro libro : libros) {
                     if (libro.getTitulo().equalsIgnoreCase(tit)) {
                         nuevoLibro = libro;
-                        esNuevo=false;
+                        esNuevo = false;
                         if (Utilidades.leerSiONo("El libro ya existe, ¿quieres añadir ejemplares?")) {
                             int num = Utilidades.leerNumPositivo("Introduzca el número de ejemplares a añadir: ");
                             nuevoLibro.anadirEjemplares(num);
@@ -66,59 +73,25 @@ public class Asignatura {
                     }
                 }
                 if (esNuevo) {
-                    int num = Utilidades.leerNumPositivo("Introduzca el número de ejemplares a añadir: ");
-                    nuevoLibro=new Libro(tit,num);
+                    int num = Utilidades.leerNumPositivo("Introduzca el número de ejemplares que tiene el libro: ");
+                    nuevoLibro = new Libro(tit, num);
                     anadirLibro(nuevoLibro);
                 }
             }
         } while (repetir || !tit.equalsIgnoreCase("fin"));
     }
 
-    /*
-    public boolean eliminarLibro() { //Devuelve false si no se ha encontrado un libro bajo ese titulo
-        boolean resp=false;
-        Libro aEliminar=buscarLibroEnAsignatura();
-        if (aEliminar!=null) {
-            resp=libros.remove(aEliminar);
-            System.out.println("Libro eliminado con éxito.");
-        }
-        return resp;
-    }
-
-    public Libro buscarLibroEnAsignatura() {
-        Libro resp = null;      // Devuelve null si no se ha encontrado nada o si se ha decidido volver
-        ArrayList<Libro> coincidencias = new ArrayList<>();
-        String texto="";
-        boolean volver=false;
-        do {
-            texto = Utilidades.leerCadena("Introduzca el nombre de la asignatura ('fin' para volver): ");
-            if (!texto.equalsIgnoreCase("fin")) {
-                for (Libro libro : libros) {
-                    if (libro.getTitulo().toLowerCase().contains(texto.toLowerCase())) {
-                        coincidencias.add(libro);
-                    }
-                }
-                if (coincidencias.isEmpty())
-                    System.out.println("No se ha encontrado ninguna coincidencia. Vuelva a intentarlo.");
-            } else volver=true;
-        } while (coincidencias.isEmpty()&&!volver);
-        if (!volver) resp=seleccionarLibro(coincidencias);
-        return resp;
-    }
-
-     */
-
     public Libro seleccionarLibro(ArrayList<Libro> listaLibros) {
-        Libro select=null;
+        Libro select = null;
         int resp;
-        System.out.println("\t"+nombre);
-        for (int i=0; i<listaLibros.size(); i++) {
-            System.out.println(i+". "+listaLibros.get(i).getTitulo());
+        System.out.println("\t" + nombre);
+        for (int i = 0; i < listaLibros.size(); i++) {
+            System.out.println(i + ". " + listaLibros.get(i).getTitulo());
         }
-        System.out.println(listaLibros.size()+". Volver");
+        System.out.println(listaLibros.size() + ". Volver");
         System.out.println();
-        resp=Utilidades.leerNumero("Seleccione el libro escogido: ",0,listaLibros.size());
-        if (resp!=listaLibros.size()) select=listaLibros.get(resp);
+        resp = Utilidades.leerNumero("Seleccione el libro escogido: ", 0, listaLibros.size());
+        if (resp != listaLibros.size()) select = listaLibros.get(resp);
         return select;
     }
 
