@@ -29,8 +29,4 @@ Para ejecutar el programa, es necesario proporcionar un archivo de datos de la b
 
 Una vez iniciado, se te presentará un menú interactivo con las opciones descritas anteriormente. Puedes seleccionar una opción escribiendo el número correspondiente y presionando "Enter". El programa continuará ejecutándose hasta que elijas la opción "9" para finalizar la ejecución.
 
-## Licencia
-
-Este proyecto está licenciado bajo la Licencia MIT - consulta el archivo [LICENSE](LICENSE) para más detalles.
-
 © 2025 Delegación de Alumnos de ETSI Sistemas Informáticos (UPM)
