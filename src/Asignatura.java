@@ -2,7 +2,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedList;
 
-public class Asignatura implements Comparable<Asignatura>{
+public class Asignatura implements Comparable<Asignatura> {
 
     // Atributos:
 
@@ -56,8 +56,8 @@ public class Asignatura implements Comparable<Asignatura>{
         String tit;
         Libro nuevoLibro;
         boolean repetir;
-        boolean esNuevo = true;
         do {
+            boolean esNuevo = true;
             repetir = false;
             tit = Utilidades.leerCadena("Introduce el nombre del libro ('fin' para volver): ");
             if (!tit.equalsIgnoreCase("fin")) {
@@ -78,7 +78,7 @@ public class Asignatura implements Comparable<Asignatura>{
                     anadirLibro(nuevoLibro);
                 }
             }
-        } while (repetir || !tit.equalsIgnoreCase("fin"));
+        } while (repetir);
     }
 
     public Libro seleccionarLibro(ArrayList<Libro> listaLibros) {

@@ -60,12 +60,12 @@ public class Utilidades {
 
     public static String leerFecha(String mensaje) {
         boolean correcto = false;
-        String resp = "";
+        String resp;
         do {
             System.out.print(mensaje);
             resp = sc.nextLine();
             String[] comprobar = resp.split("/");
-            if (comprobar.length != 3) {
+            if (comprobar.length == 3) {
                 try {
                     int dia = Integer.parseInt(comprobar[0]);
                     int mes = Integer.parseInt(comprobar[1]);
@@ -128,7 +128,8 @@ public class Utilidades {
         do {
             System.out.print(mensaje);
             resp = sc.nextLine();
-            if (resp.matches("@alumnos.upm.es$") || resp.matches("@upm.es$")) correcto = true;  // Acaba en esas cadenas
+            if (resp.matches("^[a-zA-Z0-9._%+-]+@(alumnos\\.upm\\.es|upm\\.es)$"))
+                correcto = true;  // Acaba en esas cadenas
             else System.out.println("Correo incorrecto. Vuélvalo a intentar.\n");
         } while (!correcto);
         return resp;
@@ -137,7 +138,7 @@ public class Utilidades {
     public static String leerFich(String mensaje) {
         System.out.print(mensaje);
         String resp = sc.nextLine();
-        if (!resp.endsWith(":txt")) resp += ".txt";
+        if (!resp.endsWith(".txt")) resp += ".txt";
         return resp;
     }
 

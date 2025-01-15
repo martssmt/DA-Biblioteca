@@ -75,10 +75,10 @@ public class Alumno implements Comparable<Alumno> {
 
     @Override
     public String toString() {
-        String resp = nombre + "\n";
-        resp += "\tMatrícula: " + matricula + "\n";
-        resp += "\tCorreo: " + correo + "\n";
-        resp += "\tTeléfono: " + telefono + "\n";
+        String resp = "\t" + nombre + "\n";
+        resp += "Matrícula: " + matricula + "\n";
+        resp += "Correo: " + correo + "\n";
+        resp += "Teléfono: " + telefono + "\n";
         return resp;
     }
 

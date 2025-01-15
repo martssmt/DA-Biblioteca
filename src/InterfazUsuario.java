@@ -32,11 +32,12 @@ public class InterfazUsuario {
         menu += "4. Prestar libro\n";
         menu += "5. Devolver libro\n";
         menu += "6. Alumnos con préstamos\n";
-        menu += "7. Modificar datos de un alumno\n";
-        menu += "8. Terminar ejecución\n\n";
+        menu += "7. Ver datos de un alumno\n";
+        menu += "8. Modificar datos de un alumno\n";
+        menu += "9. Terminar ejecución\n\n";
         do {
             System.out.print(menu);
-            opcion = Utilidades.leerNumero("Introduzca la opción deseada: ", 1, 8);
+            opcion = Utilidades.leerNumero("Introduzca la opción deseada: ", 1, 9);
             System.out.println();
             switch (opcion) {
                 case 1: // Mostrar inventario
@@ -57,14 +58,17 @@ public class InterfazUsuario {
                 case 6: // Alumnos con préstamos
                     mostrarAlumnosConPrestamos();
                     break;
-                case 7: // Modificar datos de un alumno
+                case 7: // Ver datos de un alumno
+                    verAlumno();
+                    break;
+                case 8: // Modificar datos de un alumno
                     modificarAlumnos();
                     break;
-                case 8: // Terminar ejecución
+                case 9: // Terminar ejecución
                     terminar();
                     break;
             }
-        } while (opcion != 8);
+        } while (opcion != 9);
         System.out.println();
         System.out.println("Fin de la ejecución.");
         System.out.println("\u00A9 2025 Delegación de Alumnos de ETSI Sistemas Informáticos (UPM)");
@@ -108,6 +112,9 @@ public class InterfazUsuario {
                     }
                     if (asignatura != null) {
                         asignatura.crearLibro();
+                        System.out.println();
+                        System.out.println("Libro añadido con éxito");
+                        System.out.println();
                     }
                     break;
                 case 2: // Eliminar libro
@@ -115,10 +122,18 @@ public class InterfazUsuario {
                     if (modificado != null) {
                         for (Asignatura asignaturaEl : inventario.getAsignaturas()) {
                             if (asignaturaEl.getLibros().remove(modificado)) {
+                                System.out.println();
+                                System.out.println("Libro eliminado con éxito");
+                                System.out.println();
+                                if (asignaturaEl.getLibros().isEmpty()) {
+                                    inventario.getAsignaturas().remove(asignaturaEl);
+                                    System.out.println("No hay más libros en la asignatura, por lo que se ha eliminado del inventario.");
+                                }
                                 break;
                             }
                         }
                     }
+
                     break;
                 case 3: // Cambiar nombre a un libro
                     modificado = busqueda();
@@ -138,6 +153,20 @@ public class InterfazUsuario {
                     System.out.println();
                     int numElim = Utilidades.leerNumPositivo("Introduce el número de ejemplares a eliminar: ");
                     modificado.eliminarEjemplares(numElim);
+                    if (modificado.getEjemplares() == 0) {
+                        for (Asignatura asign : inventario.getAsignaturas()) {
+                            if (asign.getLibros().remove(modificado)) {
+                                System.out.println();
+                                System.out.println("Como no quedan ejemplares, el libro se ha eliminado.");
+                                if (asign.getLibros().isEmpty()) {
+                                    inventario.getAsignaturas().remove(asign);
+                                    System.out.println("Como tampoco quedan libros en la asignatura, también se eliminará del inventario");
+                                }
+                                System.out.println();
+                                break;
+                            }
+                        }
+                    }
                     break;
             }
         } while (opcion != 6);
@@ -185,9 +214,27 @@ public class InterfazUsuario {
                     consulta.eliminarEjemplares(numElim);
                     break;
                 case 3: // Cambiar nombre
-                    String nuevoNom = Utilidades.leerCadena("Introduzca el título correcto: ");
-                    consulta.setTitulo(nuevoNom);
-                    System.out.println();
+                    boolean nomDispo = true;
+                    do {
+                        nomDispo = true;
+                        String nuevoNom = Utilidades.leerCadena("Introduzca el título correcto: ");
+                        boolean encontrado = false;
+                        for (Asignatura asign : inventario.getAsignaturas()) {
+                            for (Libro lib : asign.getLibros()) {
+                                if (lib != consulta && lib.getTitulo().equalsIgnoreCase(nuevoNom)) {
+                                    System.out.println("\nYa existe un libro con ese nombre en esta asignatura. Introduzca otro nombre.\n");
+                                    nomDispo = false;
+                                    encontrado = true;
+                                    break;
+                                }
+                            }
+                            if (encontrado) break;
+                        }
+                        if (nomDispo) {
+                            consulta.setTitulo(nuevoNom);
+                            System.out.println("El título se ha actualizado correctamente.\n");
+                        }
+                    } while (!nomDispo);
                     break;
                 case 4: // Mostrar datos de nuevo
                     System.out.println(consulta);
@@ -215,18 +262,21 @@ public class InterfazUsuario {
         String fecha = Utilidades.leerFecha("Introduzca la fecha del día del préstamo (dd/mm/aaaa): ");
         Alumno alumno;
         boolean interrumpido = false;
+        boolean alumNuevo = true;
         if (Utilidades.leerSiONo("¿El alumno tiene algún libro en su posesión?")) {
             alumno = buscarAlumno();
             if (alumno == null) {
                 System.out.println("Se ha interrumpido el préstamo.");
                 interrumpido = true;
             }
+            alumNuevo = false;
         } else {
             alumno = Alumno.crearAlumno();
             for (Alumno alumnoConPrestamo : alumnosConPrestamos) {
                 if (alumno.equals(alumnoConPrestamo)) {
                     System.out.println("El alumno ya está en el registro. Se le añadirá un libro más.");
                     System.out.println();
+                    alumNuevo = false;
                     alumno = alumnoConPrestamo;
                 }
             }
@@ -235,9 +285,13 @@ public class InterfazUsuario {
             Libro libroAPrestar = busqueda();
             if (libroAPrestar != null) {
                 Libro libroAIntroducirEnAlumno = libroAPrestar.prestarLibro(fecha);
-                alumnosConPrestamos.add(alumno);
-                Collections.sort(alumnosConPrestamos);
+                if (alumNuevo) {
+                    alumnosConPrestamos.add(alumno);
+                    Collections.sort(alumnosConPrestamos);
+                }
                 alumno.prestar(libroAIntroducirEnAlumno);
+                System.out.println("\nLibro prestado al alumno " + alumno.getNombre() + " con éxito.");
+                System.out.println();
             }
         }
     }
@@ -259,6 +313,8 @@ public class InterfazUsuario {
             if (opc != alumno.getPrestamos().size()) libroADev = alumno.getPrestamos().get(opc);
             if (libroADev != null) {
                 alumno.devolver(libroADev);
+                System.out.println("\nEl libro ha sido devuelto con éxito.");
+                System.out.println();
                 if (alumno.getPrestamos().isEmpty()) {
                     alumnosConPrestamos.remove(alumno);
                     System.out.println("El alumno no tiene más préstamos, por lo que se le ha eliminado del sistema.");
@@ -295,44 +351,54 @@ public class InterfazUsuario {
 
     }
 
-    // 7. Modificar datos de un alumno
+    // 7. Ver datos de un alumno
+
+    public void verAlumno() {
+        Alumno alumno = buscarAlumno();
+        System.out.println();
+        if (alumno != null) System.out.println(alumno);
+    }
+
+    // 8. Modificar datos de un alumno
 
     public void modificarAlumnos() {
         Alumno alumnoMod = buscarAlumno();
         System.out.println();
-        String menu = "\tMenú:\n";
-        menu += "1. Cambiar nombre\n";
-        menu += "2. Cambiar matrícula\n";
-        menu += "3. Cambiar correo\n";
-        menu += "4. Cambiar teléfono\n";
-        menu += "5. Volver\n";
-        int opcion;
-        do {
-            System.out.println(alumnoMod.toString());
-            System.out.println(menu);
-            opcion = Utilidades.leerNumero("Introduzca la opción deseada: ", 1, 5);
-            switch (opcion) {
-                case 1:
-                    String nom = Utilidades.leerCadena("Introduzca el nombre correcto: ");
-                    alumnoMod.setNombre(nom);
-                    break;
-                case 2:
-                    String matr = Utilidades.leerMatricula("Introduzca la matrícula correcta:");
-                    alumnoMod.setMatricula(matr);
-                    break;
-                case 3:
-                    String corr = Utilidades.leerCorreo("Introduzca el correo correcto: ");
-                    alumnoMod.setCorreo(corr);
-                    break;
-                case 4:
-                    String tel = Utilidades.leerTel("Introduzca el teléfono correcto: ");
-                    alumnoMod.setTelefono(tel);
-                    break;
-            }
-        } while (opcion != 5);
+        if (alumnoMod != null) {
+            String menu = "\tMenú:\n";
+            menu += "1. Cambiar nombre\n";
+            menu += "2. Cambiar matrícula\n";
+            menu += "3. Cambiar correo\n";
+            menu += "4. Cambiar teléfono\n";
+            menu += "5. Volver\n";
+            int opcion;
+            do {
+                System.out.println(alumnoMod);
+                System.out.println(menu);
+                opcion = Utilidades.leerNumero("Introduzca la opción deseada: ", 1, 5);
+                switch (opcion) {
+                    case 1:
+                        String nom = Utilidades.leerCadena("Introduzca el nombre correcto: ");
+                        alumnoMod.setNombre(nom);
+                        break;
+                    case 2:
+                        String matr = Utilidades.leerMatricula("Introduzca la matrícula correcta:");
+                        alumnoMod.setMatricula(matr);
+                        break;
+                    case 3:
+                        String corr = Utilidades.leerCorreo("Introduzca el correo correcto: ");
+                        alumnoMod.setCorreo(corr);
+                        break;
+                    case 4:
+                        String tel = Utilidades.leerTel("Introduzca el teléfono correcto: ");
+                        alumnoMod.setTelefono(tel);
+                        break;
+                }
+            } while (opcion != 5);
+        }
     }
 
-    // 8. Terminar ejecución
+    // 9. Terminar ejecución
 
     public void terminar() {
         if (Utilidades.leerSiONo("¿Quiere guardar los cambios?")) {

@@ -50,7 +50,10 @@ public class Inventario {
                     break;
                 }
             }
-            if (resp == null) resp = new Asignatura(nom);
+            if (resp == null) {
+                resp = new Asignatura(nom);
+                anadirAsignatura(resp);
+            }
         }
         return resp;
     }
@@ -120,7 +123,7 @@ public class Inventario {
         }
         System.out.println(lista.size() + ". Volver");
         System.out.println();
-        int opcion = Utilidades.leerNumero("Seleccione la asignatura: ", 0, lista.size());
+        int opcion = Utilidades.leerNumero("Seleccione el libro: ", 0, lista.size());
         if (opcion != lista.size()) resp = lista.get(opcion);
         return resp;
     }
