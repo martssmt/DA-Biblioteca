@@ -70,7 +70,7 @@ public class Utilidades {
                     int dia = Integer.parseInt(comprobar[0]);
                     int mes = Integer.parseInt(comprobar[1]);
                     int anio = Integer.parseInt(comprobar[2]);
-                    if (mes >= 1 && mes <= 12) {
+                    if (mes >= 1 && mes <= 12 && anio >= 2024) {
                         switch (mes) {
                             case 1, 3, 5, 7, 8, 10, 12:
                                 if (dia >= 1 && dia <= 31) correcto = true;

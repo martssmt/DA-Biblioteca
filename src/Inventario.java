@@ -25,7 +25,7 @@ public class Inventario {
     @Override
     public String toString() {
         StringBuilder resp = new StringBuilder();
-        resp.append("\t\tBilioteca DA-ETSISI\n\n");
+        resp.append("\n\t\tBilioteca DA-ETSISI\n\n");
         for (Asignatura asignatura : asignaturas) {
             resp.append(asignatura.toString());
         }
@@ -81,7 +81,7 @@ public class Inventario {
 
     public Asignatura seleccionarAsignatura(ArrayList<Asignatura> coincidencias) {
         Asignatura resp = null;
-        System.out.println("\tResultados:");
+        System.out.println("\n\tResultados:");
         for (int i = 0; i < coincidencias.size(); i++) {
             System.out.println(i + ". " + coincidencias.get(i).getNombre());
         }
@@ -117,7 +117,7 @@ public class Inventario {
 
     public Libro seleccionarLibro(ArrayList<Libro> lista) {
         Libro resp = null;
-        System.out.println("\tResultados:");
+        System.out.println("\n\tResultados:");
         for (int i = 0; i < lista.size(); i++) {
             System.out.println(i + ". " + lista.get(i).getTitulo());
         }

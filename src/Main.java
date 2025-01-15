@@ -15,11 +15,9 @@ public class Main {
 
     public static InterfazUsuario init(String archivo) {
         InterfazUsuario interfaz;
-
+        System.out.println("\tAVISO:");
+        System.out.println("\t\t-Si el archivo no existe o la ruta es incorrecta, se inicializará una biblioteca vacía.\n");
         if (Utilidades.leerSiONo("¿Quiere cargar la biblioteca desde un archivo?")) {
-            System.out.println("\tAVISO:");
-            System.out.println("\t\t-Si el archivo no existe o la ruta es incorrecta, se inicializará una biblioteca vacía.");
-            System.out.println();
             if (archivo == null) {
                 System.out.println("No se ha introducido ningún archivo (ver aviso).");
                 interfaz = new InterfazUsuario();

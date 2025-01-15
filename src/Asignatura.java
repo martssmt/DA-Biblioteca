@@ -52,10 +52,11 @@ public class Asignatura implements Comparable<Asignatura> {
         Collections.sort(libros);
     }
 
-    public void crearLibro() {
+    public boolean crearLibro() {
         String tit;
         Libro nuevoLibro;
         boolean repetir;
+        boolean resp=false;
         do {
             boolean esNuevo = true;
             repetir = false;
@@ -76,15 +77,17 @@ public class Asignatura implements Comparable<Asignatura> {
                     int num = Utilidades.leerNumPositivo("Introduzca el número de ejemplares que tiene el libro: ");
                     nuevoLibro = new Libro(tit, num);
                     anadirLibro(nuevoLibro);
+                    resp=true;
                 }
             }
         } while (repetir);
+        return resp;
     }
 
     public Libro seleccionarLibro(ArrayList<Libro> listaLibros) {
         Libro select = null;
         int resp;
-        System.out.println("\t" + nombre);
+        System.out.println("\n\t" + nombre);
         for (int i = 0; i < listaLibros.size(); i++) {
             System.out.println(i + ". " + listaLibros.get(i).getTitulo());
         }

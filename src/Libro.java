@@ -93,10 +93,10 @@ public class Libro implements Comparable<Libro> {
 
     public void eliminarEjemplares(int n) {
         if (n > (ejemplares - prestados)) {
-            System.out.println("El número introducido es mayor que el número de ejemplares disponibles en la biblioteca actualmente.");
+            System.out.println("\nEl número introducido es mayor que el número de ejemplares disponibles en la biblioteca actualmente.");
             if (Utilidades.leerSiONo("Si continúa, se pondrá el número de ejemplares al número de ejemplares prestados(" + prestados + "), ¿está seguro?")) {
                 ejemplares = prestados;
-                System.out.println("Ahora hay en total " + ejemplares + " ejemplares del libro " + titulo);
+                System.out.println("\nAhora hay en total " + ejemplares + " ejemplares del libro " + titulo+"\n");
             }
         } else {
             ejemplares -= n;
