@@ -1,3 +1,8 @@
+package model;
+
+import view.CLI;
+import java.time.LocalDate;
+
 public class Libro implements Comparable<Libro> {
 
     // Atributos:
@@ -5,11 +10,11 @@ public class Libro implements Comparable<Libro> {
     private String titulo;
     private int ejemplares;
     private int prestados;
-    private String fechaPrestamo;
+    private LocalDate fechaPrestamo;
 
     // Constructores:
 
-        // Libro de Asignatura
+        // Model.Libro de Model.Asignatura
 
     public Libro(String titulo, int ejemplares) {
         this.titulo = titulo;
@@ -27,7 +32,7 @@ public class Libro implements Comparable<Libro> {
 
         // Usado para los préstamos
 
-    public Libro(String titulo, String fechaPrestamo) {
+    public Libro(String titulo, LocalDate fechaPrestamo) {
         this.titulo = titulo;
         this.fechaPrestamo = fechaPrestamo;
     }
@@ -46,7 +51,7 @@ public class Libro implements Comparable<Libro> {
         return prestados;
     }
 
-    public String getFechaPrestamo() {
+    public LocalDate getFechaPrestamo() {
         return fechaPrestamo;
     }
 
@@ -94,7 +99,7 @@ public class Libro implements Comparable<Libro> {
     public void eliminarEjemplares(int n) {
         if (n > (ejemplares - prestados)) {
             System.out.println("\nEl número introducido es mayor que el número de ejemplares disponibles en la biblioteca actualmente.");
-            if (Utilidades.leerSiONo("Si continúa, se pondrá el número de ejemplares al número de ejemplares prestados(" + prestados + "), ¿está seguro?")) {
+            if (CLI.leerSiONo("Si continúa, se pondrá el número de ejemplares al número de ejemplares prestados(" + prestados + "), ¿está seguro?")) {
                 ejemplares = prestados;
                 System.out.println("\nAhora hay en total " + ejemplares + " ejemplares del libro " + titulo+"\n");
             }
@@ -105,7 +110,7 @@ public class Libro implements Comparable<Libro> {
         }
     }
 
-    public Libro prestarLibro(String fecha) {
+    public Libro prestarLibro(LocalDate fecha) {
         prestados++;
         return new Libro(this.titulo, fecha);
     }

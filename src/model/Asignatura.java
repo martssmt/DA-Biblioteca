@@ -1,3 +1,7 @@
+package model;
+
+import view.CLI;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedList;
@@ -60,21 +64,21 @@ public class Asignatura implements Comparable<Asignatura> {
         do {
             boolean esNuevo = true;
             repetir = false;
-            tit = Utilidades.leerCadena("Introduce el nombre del libro ('fin' para volver): ");
+            tit = CLI.leerCadena("Introduce el nombre del libro ('fin' para volver): ");
             if (!tit.equalsIgnoreCase("fin")) {
                 for (Libro libro : libros) {
                     if (libro.getTitulo().equalsIgnoreCase(tit)) {
                         nuevoLibro = libro;
                         esNuevo = false;
-                        if (Utilidades.leerSiONo("El libro ya existe, ¿quieres añadir ejemplares?")) {
-                            int num = Utilidades.leerNumPositivo("Introduzca el número de ejemplares a añadir: ");
+                        if (CLI.leerSiONo("El libro ya existe, ¿quieres añadir ejemplares?")) {
+                            int num = CLI.leerNumPositivo("Introduzca el número de ejemplares a añadir: ");
                             nuevoLibro.anadirEjemplares(num);
                         } else repetir = true;
                         break;
                     }
                 }
                 if (esNuevo) {
-                    int num = Utilidades.leerNumPositivo("Introduzca el número de ejemplares que tiene el libro: ");
+                    int num = CLI.leerNumPositivo("Introduzca el número de ejemplares que tiene el libro: ");
                     nuevoLibro = new Libro(tit, num);
                     anadirLibro(nuevoLibro);
                     resp=true;
@@ -93,7 +97,7 @@ public class Asignatura implements Comparable<Asignatura> {
         }
         System.out.println(listaLibros.size() + ". Volver");
         System.out.println();
-        resp = Utilidades.leerNumero("Seleccione el libro escogido: ", 0, listaLibros.size());
+        resp = CLI.leerNumero("Seleccione el libro escogido: ", 0, listaLibros.size());
         if (resp != listaLibros.size()) select = listaLibros.get(resp);
         return select;
     }

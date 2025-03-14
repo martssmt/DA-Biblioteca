@@ -3,7 +3,7 @@ package view;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
-public class Utilidades {
+public class CLI {
 
     private static final Scanner sc = new Scanner(System.in);
 

@@ -1,3 +1,6 @@
+import model.InterfazUsuario;
+import view.CLI;
+
 public class Main {
 
     public static void main(String[] args) {
@@ -17,7 +20,7 @@ public class Main {
         InterfazUsuario interfaz;
         System.out.println("\tAVISO:");
         System.out.println("\t\t-Si el archivo no existe o la ruta es incorrecta, se inicializará una biblioteca vacía.\n");
-        if (Utilidades.leerSiONo("¿Quiere cargar la biblioteca desde un archivo?")) {
+        if (CLI.leerSiONo("¿Quiere cargar la biblioteca desde un archivo?")) {
             if (archivo == null) {
                 System.out.println("No se ha introducido ningún archivo (ver aviso).");
                 interfaz = new InterfazUsuario();

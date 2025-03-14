@@ -1,3 +1,7 @@
+package model;
+
+import view.CLI;
+
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -85,10 +89,10 @@ public class Alumno implements Comparable<Alumno> {
     // Métodos:
 
     public static Alumno crearAlumno() {
-        String nom = Utilidades.leerCadena("Introduzca el nombre: ");
-        String matr = Utilidades.leerMatricula("Introduzca la matricula: ");
-        String correo = Utilidades.leerCorreo("Introduzca el correo institucional: ");
-        String telef = Utilidades.leerTel("Introduzca el teléfono: ");
+        String nom = CLI.leerCadena("Introduzca el nombre: ");
+        String matr = CLI.leerMatricula("Introduzca la matricula: ");
+        String correo = CLI.leerCorreo("Introduzca el correo institucional: ");
+        String telef = CLI.leerTel("Introduzca el teléfono: ");
         return new Alumno(nom, matr, correo, telef);
     }
 

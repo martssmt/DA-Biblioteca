@@ -1,4 +1,11 @@
 package controller.command;
 
-public class ShowInventoryCommand {
+public class ShowInventoryCommand implements Command{
+
+    // @TODO: Poner como atributos los parámetros que se requieren para el comando
+
+    @Override
+    public void execute() {
+
+    }
 }

@@ -1,3 +1,7 @@
+package model;
+
+import view.CLI;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedList;
@@ -40,7 +44,7 @@ public class Inventario {
     }
 
     public Asignatura crearAsignatura() {
-        String nom = Utilidades.leerCadena("Introduce el nombre de la asignatura ('fin' para volver): ");
+        String nom = CLI.leerCadena("Introduce el nombre de la asignatura ('fin' para volver): ");
         Asignatura resp = null;
         if (!nom.equalsIgnoreCase("fin")) {
             for (Asignatura asignatura : asignaturas) {
@@ -64,7 +68,7 @@ public class Inventario {
         ArrayList<Asignatura> coincidencias = new ArrayList<>();
         String texto;
         do {
-            texto = Utilidades.leerCadena("Introduzca el nombre de la asignatura ('fin' para volver): ");
+            texto = CLI.leerCadena("Introduzca el nombre de la asignatura ('fin' para volver): ");
             if (!texto.equalsIgnoreCase("fin")) {
                 for (Asignatura asignatura : asignaturas) {
                     if (asignatura.getNombre().toLowerCase().contains(texto.toLowerCase())) {
@@ -87,7 +91,7 @@ public class Inventario {
         }
         System.out.println(coincidencias.size() + ". Volver");
         System.out.println();
-        int opcion = Utilidades.leerNumero("Seleccione la asignatura: ", 0, coincidencias.size());
+        int opcion = CLI.leerNumero("Seleccione la asignatura: ", 0, coincidencias.size());
         if (opcion != coincidencias.size()) resp = coincidencias.get(opcion);
         return resp;
     }
@@ -98,7 +102,7 @@ public class Inventario {
         ArrayList<Libro> coincidencias = new ArrayList<>();
         String texto;
         do {
-            texto = Utilidades.leerCadena("Introduzca el nombre del libro ('fin' para volver): ");
+            texto = CLI.leerCadena("Introduzca el nombre del libro ('fin' para volver): ");
             if (!texto.equalsIgnoreCase("fin")) {
                 for (Asignatura asignatura : asignaturas) {
                     for (Libro libro : asignatura.getLibros()) {
@@ -123,7 +127,7 @@ public class Inventario {
         }
         System.out.println(lista.size() + ". Volver");
         System.out.println();
-        int opcion = Utilidades.leerNumero("Seleccione el libro: ", 0, lista.size());
+        int opcion = CLI.leerNumero("Seleccione el libro: ", 0, lista.size());
         if (opcion != lista.size()) resp = lista.get(opcion);
         return resp;
     }
