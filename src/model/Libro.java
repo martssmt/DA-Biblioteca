@@ -3,128 +3,31 @@ package model;
 import view.CLI;
 import java.time.LocalDate;
 
-public class Libro implements Comparable<Libro> {
+public class Libro {
 
-    // Atributos:
+    private final String isbn;
+    private final String titulo;
 
-    private String titulo;
-    private int ejemplares;
-    private int prestados;
-    private LocalDate fechaPrestamo;
-
-    // Constructores:
-
-        // Model.Libro de Model.Asignatura
-
-    public Libro(String titulo, int ejemplares) {
+    public Libro(String isbn, String titulo) {
+        this.isbn = isbn;
         this.titulo = titulo;
-        this.ejemplares = ejemplares;
-        prestados = 0;
     }
 
-        // Usado para cargar desde archivo
-
-    public Libro(String titulo, int ejemplares, int prestados) {
-        this.titulo = titulo;
-        this.ejemplares = ejemplares;
-        this.prestados = prestados;
+    public String getIsbn() {
+        return isbn;
     }
-
-        // Usado para los préstamos
-
-    public Libro(String titulo, LocalDate fechaPrestamo) {
-        this.titulo = titulo;
-        this.fechaPrestamo = fechaPrestamo;
-    }
-
-    // Getters:
 
     public String getTitulo() {
         return titulo;
     }
 
-    public int getEjemplares() {
-        return ejemplares;
-    }
-
-    public int getPrestados() {
-        return prestados;
-    }
-
-    public LocalDate getFechaPrestamo() {
-        return fechaPrestamo;
-    }
-
-    // Setters:
-
-    public void setTitulo(String titulo) {
-        this.titulo = titulo;
-    }
-
-    // toString
-
     @Override
-    public String toString() {
-        return "\t\t" + titulo +
-                "\nEjemplares totales: " + ejemplares +
-                "\t\tEjemplares prestados: " + prestados +
-                "\t\tEjemplares disponibles: " + (ejemplares - prestados) + "\n";
-    }
-
-    public String toStringPrestado() {
-        return "\t\t" + titulo + "\t\tFecha de préstamo: " + fechaPrestamo;
-    }
-
-    // compareTo
-
-    @Override
-    public int compareTo(Libro otroLibro) {
-        return this.titulo.compareToIgnoreCase(otroLibro.titulo);
-    }
-
-    // equals
-
-    public boolean equals(Libro libro) {
-        return libro.getTitulo().equalsIgnoreCase(titulo);
-    }
-
-    // Métodos:
-
-    public void anadirEjemplares(int n) {
-        ejemplares += n;
-        System.out.println("Ahora hay en total " + ejemplares + " ejemplares del libro " + titulo);
-        System.out.println();
-    }
-
-    public void eliminarEjemplares(int n) {
-        if (n > (ejemplares - prestados)) {
-            System.out.println("\nEl número introducido es mayor que el número de ejemplares disponibles en la biblioteca actualmente.");
-            if (CLI.leerSiONo("Si continúa, se pondrá el número de ejemplares al número de ejemplares prestados(" + prestados + "), ¿está seguro?")) {
-                ejemplares = prestados;
-                System.out.println("\nAhora hay en total " + ejemplares + " ejemplares del libro " + titulo+"\n");
-            }
-        } else {
-            ejemplares -= n;
-            System.out.println("Ahora hay en total " + ejemplares + " ejemplares del libro " + titulo);
-            System.out.println();
+    public boolean equals(Object o) {
+        boolean result = false;
+        if (o instanceof Libro libro) {
+            result = (this == libro) || (libro.getIsbn().equals(this.getIsbn()));
         }
-    }
-
-    public Libro prestarLibro(LocalDate fecha) {
-        prestados++;
-        return new Libro(this.titulo, fecha);
-    }
-
-    public boolean devolverLibro() {
-        boolean resp = false;
-        if (prestados > 0) {
-            prestados--;
-            resp = true;
-        } else {
-            System.out.println("No hay ningún ejemplar prestado de este libro.");
-            System.out.println();
-        }
-        return resp;
+        return result;
     }
 
 }

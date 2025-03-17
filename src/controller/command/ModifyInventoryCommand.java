@@ -1,8 +1,19 @@
 package controller.command;
 
+import model.Biblioteca;
+import model.Libro;
+
 public class ModifyInventoryCommand implements Command{
 
-    // @TODO: Poner como atributos los parámetros que se requieren para el comando
+    private final Biblioteca<Libro> biblioteca;
+
+    public ModifyInventoryCommand(Biblioteca<Libro> biblioteca) {
+        this.biblioteca = biblioteca;
+    }
+
+    public Biblioteca<Libro> getBiblioteca() {
+        return biblioteca;
+    }
 
     @Override
     public void execute() {

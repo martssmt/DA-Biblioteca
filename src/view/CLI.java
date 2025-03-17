@@ -60,6 +60,7 @@ public class CLI {
         return resp;
     }
 
+    @Deprecated
     public static String leerFecha(String mensaje) {
         boolean correcto = false;
         String resp;

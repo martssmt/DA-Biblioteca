@@ -2,35 +2,25 @@ package model;
 
 import view.CLI;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.LinkedList;
+import java.util.*;
 
-public class Inventario {
+public class Biblioteca<T> {
 
-    // Atributos:
+    private Map<String, T> map;
 
-    private static LinkedList<Asignatura> asignaturas;
-
-    // Constructor:
-
-    public Inventario() {
-        asignaturas = new LinkedList<>();
+    public Biblioteca() {
+        this.map = new HashMap<>();
     }
 
-    // Getters:
-
-    public LinkedList<Asignatura> getAsignaturas() {
-        return asignaturas;
+    public Biblioteca(Map<String, T> map) {
+        this.map = map;
     }
-
-    // toString:
 
     @Override
     public String toString() {
         StringBuilder resp = new StringBuilder();
         resp.append("\n\t\tBilioteca DA-ETSISI\n\n");
-        for (Asignatura asignatura : asignaturas) {
+        for (AsignaturaDeprecated asignatura : asignaturas) {
             resp.append(asignatura.toString());
         }
         return resp.toString();
@@ -38,16 +28,16 @@ public class Inventario {
 
     // Métodos:
 
-    public void anadirAsignatura(Asignatura asignatura) {
+    public void anadirAsignatura(AsignaturaDeprecated asignatura) {
         asignaturas.add(asignatura);
         Collections.sort(asignaturas);
     }
 
-    public Asignatura crearAsignatura() {
+    public AsignaturaDeprecated crearAsignatura() {
         String nom = CLI.leerCadena("Introduce el nombre de la asignatura ('fin' para volver): ");
-        Asignatura resp = null;
+        AsignaturaDeprecated resp = null;
         if (!nom.equalsIgnoreCase("fin")) {
-            for (Asignatura asignatura : asignaturas) {
+            for (AsignaturaDeprecated asignatura : asignaturas) {
                 if (asignatura.getNombre().equalsIgnoreCase(nom)) {
                     System.out.println("La asignatura ya existe. El libro se añadirá a ella.");
                     resp = asignatura;
@@ -55,22 +45,22 @@ public class Inventario {
                 }
             }
             if (resp == null) {
-                resp = new Asignatura(nom);
+                resp = new AsignaturaDeprecated(nom);
                 anadirAsignatura(resp);
             }
         }
         return resp;
     }
 
-    public Asignatura buscarAsignatura() {
+    public AsignaturaDeprecated buscarAsignatura() {
         boolean volver = false;
-        Asignatura resp = null;
-        ArrayList<Asignatura> coincidencias = new ArrayList<>();
+        AsignaturaDeprecated resp = null;
+        ArrayList<AsignaturaDeprecated> coincidencias = new ArrayList<>();
         String texto;
         do {
             texto = CLI.leerCadena("Introduzca el nombre de la asignatura ('fin' para volver): ");
             if (!texto.equalsIgnoreCase("fin")) {
-                for (Asignatura asignatura : asignaturas) {
+                for (AsignaturaDeprecated asignatura : asignaturas) {
                     if (asignatura.getNombre().toLowerCase().contains(texto.toLowerCase())) {
                         coincidencias.add(asignatura);
                     }
@@ -83,8 +73,8 @@ public class Inventario {
         return resp;
     }
 
-    public Asignatura seleccionarAsignatura(ArrayList<Asignatura> coincidencias) {
-        Asignatura resp = null;
+    public AsignaturaDeprecated seleccionarAsignatura(ArrayList<AsignaturaDeprecated> coincidencias) {
+        AsignaturaDeprecated resp = null;
         System.out.println("\n\tResultados:");
         for (int i = 0; i < coincidencias.size(); i++) {
             System.out.println(i + ". " + coincidencias.get(i).getNombre());
@@ -104,7 +94,7 @@ public class Inventario {
         do {
             texto = CLI.leerCadena("Introduzca el nombre del libro ('fin' para volver): ");
             if (!texto.equalsIgnoreCase("fin")) {
-                for (Asignatura asignatura : asignaturas) {
+                for (AsignaturaDeprecated asignatura : asignaturas) {
                     for (Libro libro : asignatura.getLibros()) {
                         if (libro.getTitulo().toLowerCase().contains(texto.toLowerCase())) {
                             coincidencias.add(libro);

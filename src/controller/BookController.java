@@ -4,21 +4,22 @@ import model.Libro;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 public class BookController {
 
-    private Map<String, Libro> library;
+    private Libro book;
 
     public BookController() {
-        library = new HashMap<String, Libro>();
+
     }
 
-    public Map<String, Libro> getLibrary() {
-        return library;
+    public Libro getBook() {
+        return book;
     }
 
-    public Libro getBook(String isbn){
-        return library.get(isbn);
+    public void setBook(Libro book) {
+        this.book = book;
     }
 
 }

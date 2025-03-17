@@ -16,13 +16,13 @@ public class InterfazUsuario {
     // Atributos:
 
     private LinkedList<Alumno> alumnosConPrestamos;
-    private Inventario inventario;
+    private Biblioteca biblioteca;
 
     // Constructor:
 
     public InterfazUsuario() {
         alumnosConPrestamos = new LinkedList<>();
-        inventario = new Inventario();
+        biblioteca = new Biblioteca();
     }
 
     // Menú
@@ -82,10 +82,10 @@ public class InterfazUsuario {
 
     public void mostrarInventario() {
         if (CLI.leerSiONo("¿Desea ver todo?")) {
-            System.out.println(inventario.toString());
+            System.out.println(biblioteca.toString());
         } else {
             System.out.println();
-            Asignatura asigAVer = inventario.buscarAsignatura();
+            AsignaturaDeprecated asigAVer = biblioteca.buscarAsignatura();
             if (asigAVer != null) {
                 System.out.println();
                 System.out.println(asigAVer);
@@ -111,13 +111,13 @@ public class InterfazUsuario {
             Libro modificado;
             switch (opcion) {
                 case 1: // Añadir libro nuevo
-                    Asignatura asignatura;
+                    AsignaturaDeprecated asignatura;
                     if (CLI.leerSiONo("¿Quieres añadir también una asignatura?")) {
                         System.out.println();
-                        asignatura = inventario.crearAsignatura();
+                        asignatura = biblioteca.crearAsignatura();
                     } else {
                         System.out.println();
-                        asignatura = inventario.buscarAsignatura();
+                        asignatura = biblioteca.buscarAsignatura();
                     }
                     if (asignatura != null) {
                         System.out.println();
@@ -131,13 +131,13 @@ public class InterfazUsuario {
                 case 2: // Eliminar libro
                     modificado = busqueda();
                     if (modificado != null && modificado.getPrestados()==0) {
-                        for (Asignatura asignaturaEl : inventario.getAsignaturas()) {
+                        for (AsignaturaDeprecated asignaturaEl : biblioteca.getAsignaturas()) {
                             if (asignaturaEl.getLibros().remove(modificado)) {
                                 System.out.println();
                                 System.out.println("Model.Libro eliminado con éxito");
                                 System.out.println();
                                 if (asignaturaEl.getLibros().isEmpty()) {
-                                    inventario.getAsignaturas().remove(asignaturaEl);
+                                    biblioteca.getAsignaturas().remove(asignaturaEl);
                                     System.out.println("No hay más libros en la asignatura, por lo que se ha eliminado del inventario.");
                                 }
                                 break;
@@ -173,12 +173,12 @@ public class InterfazUsuario {
                         System.out.println();
                         modificado.eliminarEjemplares(numElim);
                         if (modificado.getEjemplares() == 0) {
-                            for (Asignatura asign : inventario.getAsignaturas()) {
+                            for (AsignaturaDeprecated asign : biblioteca.getAsignaturas()) {
                                 if (asign.getLibros().remove(modificado)) {
                                     System.out.println();
                                     System.out.println("Como no quedan ejemplares, el libro se ha eliminado.");
                                     if (asign.getLibros().isEmpty()) {
-                                        inventario.getAsignaturas().remove(asign);
+                                        biblioteca.getAsignaturas().remove(asign);
                                         System.out.println("Como tampoco quedan libros en la asignatura, también se eliminará del inventario");
                                     }
                                     System.out.println();
@@ -195,7 +195,7 @@ public class InterfazUsuario {
     // 3. Consultar libros del inventario
 
     public void consultarInventario() {
-        Libro consulta = inventario.buscarLibro();
+        Libro consulta = biblioteca.buscarLibro();
         if (consulta!=null) {
             System.out.println(consulta.toString());
             System.out.println();
@@ -240,7 +240,7 @@ public class InterfazUsuario {
                             nomDispo = true;
                             String nuevoNom = CLI.leerCadena("Introduzca el título correcto: ");
                             boolean encontrado = false;
-                            for (Asignatura asign : inventario.getAsignaturas()) {
+                            for (AsignaturaDeprecated asign : biblioteca.getAsignaturas()) {
                                 for (Libro lib : asign.getLibros()) {
                                     if (lib != consulta && lib.getTitulo().equalsIgnoreCase(nuevoNom)) {
                                         System.out.println("\nYa existe un libro con ese nombre en esta asignatura. Introduzca otro nombre.\n");
@@ -344,7 +344,7 @@ public class InterfazUsuario {
                     System.out.println();
                 }
                 boolean encontrado = false;
-                for (Asignatura asignatura : inventario.getAsignaturas()) {
+                for (AsignaturaDeprecated asignatura : biblioteca.getAsignaturas()) {
                     for (Libro libro : asignatura.getLibros()) {
                         if (libro.equals(libroADev)) {
                             libro.devolverLibro();
@@ -446,7 +446,7 @@ public class InterfazUsuario {
             try (PrintWriter out = new PrintWriter(fich)) {
                 archivoAbierto = true;
                 // Guarda el inventario
-                for (Asignatura asignatura : inventario.getAsignaturas()) {
+                for (AsignaturaDeprecated asignatura : biblioteca.getAsignaturas()) {
                     out.println(asignatura.getNombre());
                     for (Libro libro : asignatura.getLibros()) {
                         out.println(libro.getTitulo() + ";" + libro.getEjemplares() + ";" + libro.getPrestados());
@@ -481,7 +481,7 @@ public class InterfazUsuario {
             // Leer inventario
             while (!(linea = sc.nextLine()).equals("------")) {
                 String nom = linea;
-                Asignatura asign = new Asignatura(nom);
+                AsignaturaDeprecated asign = new AsignaturaDeprecated(nom);
                 while (!(linea = sc.nextLine()).equals("---")) {
                     String[] datos = linea.split(";");
                     String tit = datos[0];
@@ -490,7 +490,7 @@ public class InterfazUsuario {
                     Libro libr = new Libro(tit, ejempl, prest);
                     asign.anadirLibro(libr);
                 }
-                interfaz.inventario.anadirAsignatura(asign);
+                interfaz.biblioteca.anadirAsignatura(asign);
             }
             // Leer alumnosConPrestamos
             while (sc.hasNextLine()) {
@@ -558,7 +558,7 @@ public class InterfazUsuario {
         Libro resp=null;
         if (CLI.leerSiONo("¿Quiere buscar el libro por asignaturas?: ")) {
             System.out.println();
-            Asignatura asignatura = inventario.buscarAsignatura();
+            AsignaturaDeprecated asignatura = biblioteca.buscarAsignatura();
             System.out.println();
             if (asignatura!=null) {
                 ArrayList<Libro> todos = new ArrayList<>(asignatura.getLibros());
@@ -566,7 +566,7 @@ public class InterfazUsuario {
             }
         } else {
             System.out.println();
-            resp = inventario.buscarLibro();
+            resp = biblioteca.buscarLibro();
         }
         return resp; // Devuelve null si la búsqueda se ha interrumpido
     }
