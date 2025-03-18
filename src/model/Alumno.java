@@ -5,24 +5,21 @@ import view.CLI;
 import java.util.ArrayList;
 import java.util.Collections;
 
-public class Alumno implements Comparable<Alumno> {
+public class Alumno {
 
-    // Atributos:
+    private final String matricula;
+    private String nombre;
+    private String apellido;
+    private String correo;
+    private String telefono;
 
-    private String nombre, matricula, correo, telefono;
-    private final ArrayList<Libro> prestamos;
-
-    // Constructor:
-
-    public Alumno(String nombre, String matricula, String correo, String telefono) {
+    public Alumno(String nombre, String apellido, String matricula, String correo, String telefono) {
         this.nombre = nombre;
+        this.apellido = apellido;
         this.matricula = matricula;
         this.correo = correo;
         this.telefono = telefono;
-        prestamos = new ArrayList<>();
     }
-
-    // Getters:
 
     public String getNombre() {
         return nombre;
@@ -40,18 +37,8 @@ public class Alumno implements Comparable<Alumno> {
         return telefono;
     }
 
-    public ArrayList<Libro> getPrestamos() {
-        return prestamos;
-    }
-
-    // Setters:
-
     public void setNombre(String nombre) {
         this.nombre = nombre;
-    }
-
-    public void setMatricula(String matricula) {
-        this.matricula = matricula;
     }
 
     public void setCorreo(String correo) {
@@ -62,20 +49,9 @@ public class Alumno implements Comparable<Alumno> {
         this.telefono = telefono;
     }
 
-    // compareTo
-
-    @Override
-    public int compareTo(Alumno otroAlumno) {
-        return this.nombre.compareToIgnoreCase(otroAlumno.nombre);
-    }
-
-    // equals
-
     public boolean equals(Alumno otroAlumno) {
         return this.matricula.equals(otroAlumno.matricula);
     }
-
-    // toString() {
 
     @Override
     public String toString() {
@@ -86,22 +62,13 @@ public class Alumno implements Comparable<Alumno> {
         return resp;
     }
 
-    // Métodos:
-
     public static Alumno crearAlumno() {
         String nom = CLI.leerCadena("Introduzca el nombre: ");
+        String apellido = CLI.leerCadena("Introduzca el apellido: ");
         String matr = CLI.leerMatricula("Introduzca la matricula: ");
         String correo = CLI.leerCorreo("Introduzca el correo institucional: ");
         String telef = CLI.leerTel("Introduzca el teléfono: ");
-        return new Alumno(nom, matr, correo, telef);
+        return new Alumno(nom, apellido, matr, correo, telef);
     }
 
-    public void prestar(Libro libro) {
-        prestamos.add(libro);
-        Collections.sort(prestamos);
-    }
-
-    public boolean devolver(Libro libro) {
-        return (prestamos.remove(libro));
-    }
 }
