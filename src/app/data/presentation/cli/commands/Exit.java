@@ -1,4 +1,6 @@
 package app.data.presentation.cli.commands;
 
-public class Exit {
+import app.data.presentation.cli.Command;
+
+public class Exit implements Command {
 }

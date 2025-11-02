@@ -1,4 +1,6 @@
 package app.data.presentation.cli.commands;
 
-public class Remove {
+import app.data.presentation.cli.Command;
+
+public class Remove implements Command {
 }

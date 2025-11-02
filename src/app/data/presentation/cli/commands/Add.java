@@ -1,4 +1,6 @@
 package app.data.presentation.cli.commands;
 
-public class Add {
+import app.data.presentation.cli.Command;
+
+public class Add implements Command {
 }

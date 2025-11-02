@@ -1,4 +1,6 @@
 package app.data.presentation.cli.commands;
 
-public class Search {
+import app.data.presentation.cli.Command;
+
+public class Search implements Command {
 }

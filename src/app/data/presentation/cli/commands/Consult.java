@@ -1,4 +1,6 @@
 package app.data.presentation.cli.commands;
 
-public class Consult {
+import app.data.presentation.cli.Command;
+
+public class Consult implements Command {
 }

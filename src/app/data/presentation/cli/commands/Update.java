@@ -1,4 +1,6 @@
 package app.data.presentation.cli.commands;
 
-public class Update {
+import app.data.presentation.cli.Command;
+
+public class Update implements Command {
 }

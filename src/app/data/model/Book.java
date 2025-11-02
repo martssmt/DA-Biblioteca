@@ -1,4 +1,4 @@
 package app.data.model;
 
-public class Book {
+public class Book extends Entity {
 }

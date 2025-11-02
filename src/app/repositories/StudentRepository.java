@@ -1,4 +1,6 @@
 package app.repositories;
 
-public interface StudentRepository {
+import app.data.model.Student;
+
+public interface StudentRepository extends GenericRepository<Student> {
 }

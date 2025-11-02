@@ -1,4 +1,6 @@
 package app.repositories;
 
-public interface LoanRepository {
+import app.data.model.Loan;
+
+public interface LoanRepository extends GenericRepository<Loan> {
 }

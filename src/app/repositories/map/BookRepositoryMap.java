@@ -1,4 +1,7 @@
 package app.repositories.map;
 
-public class BookRepositoryMap {
+import app.data.model.Book;
+import app.repositories.BookRepository;
+
+public class BookRepositoryMap extends GenericRepositoryMap<Book> implements BookRepository {
 }

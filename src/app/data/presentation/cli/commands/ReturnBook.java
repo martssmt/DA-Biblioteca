@@ -1,4 +1,6 @@
 package app.data.presentation.cli.commands;
 
-public class ReturnBook {
+import app.data.presentation.cli.Command;
+
+public class ReturnBook implements Command {
 }

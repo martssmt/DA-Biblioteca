@@ -1,4 +1,6 @@
 package app.repositories;
 
-public interface GenericRepository {
+import app.data.model.Entity;
+
+public interface GenericRepository<T extends Entity> {
 }

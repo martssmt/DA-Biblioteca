@@ -1,4 +1,4 @@
 package app.services;
 
-public class StudentService {
+public class StudentService implements GenericService {
 }

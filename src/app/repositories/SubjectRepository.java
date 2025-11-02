@@ -1,4 +1,6 @@
 package app.repositories;
 
-public interface SubjectRepository {
+import app.data.model.Subject;
+
+public interface SubjectRepository extends GenericRepository<Subject> {
 }

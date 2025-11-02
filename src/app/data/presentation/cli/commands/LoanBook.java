@@ -1,4 +1,6 @@
 package app.data.presentation.cli.commands;
 
-public class LoanBook {
+import app.data.presentation.cli.Command;
+
+public class LoanBook implements Command {
 }

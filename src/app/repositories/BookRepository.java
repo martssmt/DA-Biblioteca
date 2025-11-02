@@ -1,4 +1,6 @@
 package app.repositories;
 
-public interface BookRepository {
+import app.data.model.Book;
+
+public interface BookRepository extends GenericRepository<Book> {
 }

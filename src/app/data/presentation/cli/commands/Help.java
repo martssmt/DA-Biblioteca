@@ -1,4 +1,6 @@
 package app.data.presentation.cli.commands;
 
-public class Help {
+import app.data.presentation.cli.Command;
+
+public class Help implements Command {
 }

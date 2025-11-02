@@ -1,4 +1,7 @@
 package app.repositories.map;
 
-public class LoanRepositoryMap {
+import app.data.model.Loan;
+import app.repositories.LoanRepository;
+
+public class LoanRepositoryMap extends GenericRepositoryMap<Loan> implements LoanRepository {
 }
