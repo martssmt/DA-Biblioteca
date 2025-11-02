@@ -25,7 +25,7 @@ El sistema incluye las siguientes opciones principales:
 
 ## Uso
 
-Para ejecutar el programa, es necesario proporcionar un archivo de datos de la biblioteca (opcional). Si no se proporciona un archivo, el sistema inicializa la biblioteca de manera vacía. Para ejecutar el programa sin un archivo de entrada, simplemente ejecuta la clase `Main`. 
+Para ejecutar el programa, es necesario proporcionar un archivo de datos de la biblioteca (opcional). Si no se proporciona un archivo, el sistema inicializa la biblioteca de manera vacía. Para ejecutar el programa sin un archivo de entrada, simplemente ejecuta la clase `old.Main`. 
 
 Una vez iniciado, se te presentará un menú interactivo con las opciones descritas anteriormente. Puedes seleccionar una opción escribiendo el número correspondiente y presionando "Enter". El programa continuará ejecutándose hasta que elijas la opción "9" para finalizar la ejecución.
 

@@ -1,0 +1,152 @@
+@startuml
+title: "DA-BIBLIOTECA v.2.0.0"
+
+package app {
+    package  data {
+        package model{
+            package exceptions {
+                class InvalidAttributeException {
+                }
+            }
+            class Entity {
+                -id: int
+                +<<Override>> equals(): boolean
+                +<<Override>> hashCode(): boolean
+                +<<Override>> toString(): String
+            }
+            class Book{
+            }
+            class Student {
+            }
+            class Subject {
+            }
+            class Loan {
+            }
+
+            Book --|> Entity
+            Student --|> Entity
+            Subject --|> Entity
+            Loan --|> Entity
+        }
+
+        package repositories{
+            package exceptions {
+                class EntityNotFoundException{}
+            }
+            interface GenericRepository {
+            }
+            interface BookRepository {
+            }
+            interface StudentRepository {
+            }
+            interface SubjectRepository {
+            }
+            interface LoanRepository {
+            }
+            package map{
+                abstract class GenericRepositoryMap {}
+                class StudentRepositoryMap{}
+                class BookRepositoryMap{}
+                class SubjectRepositoryMap{}
+                class LoanRepositoryMap{}
+            }
+            class Seeder {
+            }
+
+            BookRepository --|> GenericRepository
+            StudentRepository --|> GenericRepository
+            SubjectRepository --|> GenericRepository
+            GenericRepositoryMap --|> GenericRepository
+            StudentRepositoryMap --|> GenericRepositoryMap
+            StudentRepositoryMap ..|> StudentRepository
+            BookRepositoryMap --|> GenericRepositoryMap
+            BookRepositoryMap ..|> BookRepository
+            SubjectRepositoryMap --|> GenericRepositoryMap
+            SubjectRepositoryMap ..|> SubjectRepository
+            LoanRepositoryMap --|> GenericRepositoryMap
+            LoanRepositoryMap ..|> LoanRepository
+        }
+    }
+
+    package services {
+        package exceptions {
+            class DuplicateException{}
+            class NotFoundException{}
+        }
+        class StudentService {
+        }
+        class BookService {
+        }
+        class SubjectService {
+        }
+        class LoanService {
+        }
+        interface GenericService<T>{}
+
+        StudentService ..|> GenericService
+        BookService ..|> GenericService
+        SubjectService ..|> GenericService
+        LoanService ..|> GenericService
+    }
+
+    package presentation {
+        package cli {
+            package exceptions {
+                class CommandException{}
+                class BadRequestException{}
+            }
+
+            package commands {
+                class Exit{}
+                class Help{}
+                class List{}
+                class LoanBook{}
+                class ReturnBook{}
+                class Update{}
+                class Consult{}
+                class Add{}
+                class Remove{}
+                class Search{}
+            }
+
+            interface Command {
+            }
+            class CommandLineInterface {}
+            class ErrorHandler {}
+
+            Exit ..|> Command
+            Help ..|> Command
+            List ..|> Command
+            LoanBook ..|> Command
+            ReturnBook ..|> Command
+            Update ..|> Command
+            Consult ..|> Command
+            Add ..|> Command
+            Remove..|> Command
+            Search ..|> Command
+        }
+
+       package view {
+            class View{}
+            enum AnsiCode{}
+       }
+    }
+
+    class App {
+        +main()
+    }
+
+    class DependencyInjector {
+    }
+
+
+    Loan --> Book
+    Loan --> Student
+    Book --> Subject
+    DependencyInjector --> BookService
+    DependencyInjector --> StudentService
+    DependencyInjector --> LoanService
+
+}
+
+@enduml

@@ -1,3 +1,5 @@
+package old;
+
 public class Libro implements Comparable<Libro> {
 
     // Atributos:
@@ -9,7 +11,7 @@ public class Libro implements Comparable<Libro> {
 
     // Constructores:
 
-        // Libro de Asignatura
+        // old.Libro de old.Asignatura
 
     public Libro(String titulo, int ejemplares) {
         this.titulo = titulo;
