@@ -1,7 +1,11 @@
 package app.services.exceptions;
 
 public class DuplicateException extends RuntimeException {
-    public DuplicateException(String message) {
-        super(message);
+
+    private static final String DESCRIPTION = "ID duplicado. Debiera ser único";
+
+    public DuplicateException(String detail) {
+        super(DESCRIPTION + ": " + detail);
     }
+
 }

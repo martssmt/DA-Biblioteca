@@ -6,6 +6,8 @@ package app {
         package model{
             package exceptions {
                 class InvalidAttributeException {
+                    -DESCRIPTION: String
+                    +InvalidAttributeException(detail: string)
                 }
             }
             class Entity {
@@ -31,7 +33,10 @@ package app {
 
         package repositories{
             package exceptions {
-                class EntityNotFoundException{}
+                class EntityNotFoundException{
+                    -DESCRIPTION: String
+                    +EntityNotFoundException(detail: string)
+                }
             }
             interface GenericRepository {
             }
@@ -70,8 +75,14 @@ package app {
 
     package services {
         package exceptions {
-            class DuplicateException{}
-            class NotFoundException{}
+            class DuplicateException{
+                -DESCRIPTION: String
+                +DuplicateException(id: int)
+            }
+            class NotFoundException{
+                -DESCRIPTION: String
+                +NotFoundException(detail: string)
+            }
         }
         class StudentService {
         }
@@ -92,8 +103,18 @@ package app {
     package presentation {
         package cli {
             package exceptions {
-                class CommandException{}
-                class BadRequestException{}
+                class CommandWithInvalidArgumentException{
+                    -DESCRIPTION: String
+                    +CommandWithInvalidArgumentException(detail: string)
+                }
+                class BadRequestException{
+                    -DESCRIPTION: String
+                    +BadRequestException(detail: string)
+                }
+                class NonExistantCommandException{
+                    -DESCRIPTION: String
+                    +NonExistantCommandException(detail: string)
+                }
             }
 
             package commands {

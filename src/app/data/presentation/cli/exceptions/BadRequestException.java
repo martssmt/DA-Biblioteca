@@ -1,7 +1,11 @@
 package app.data.presentation.cli.exceptions;
 
 public class BadRequestException extends RuntimeException {
-    public BadRequestException(String message) {
-        super(message);
+
+    private static final String DESCRIPTION = "Petición incorrecta";
+
+    public BadRequestException(String detail) {
+        super(DESCRIPTION + ": " + detail);
     }
+
 }

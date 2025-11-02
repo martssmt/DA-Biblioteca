@@ -1,7 +1,11 @@
 package app.services.exceptions;
 
 public class NotFoundException extends RuntimeException {
-  public NotFoundException(String message) {
-    super(message);
+
+  private static final String DESCRIPTION = "Objeto no encontrado";
+
+  public NotFoundException(String detail) {
+    super(DESCRIPTION + ": " + detail);
   }
+
 }
