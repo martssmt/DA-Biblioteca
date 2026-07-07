@@ -7,12 +7,14 @@ public class Loan extends Entity {
     private LocalDate date;
     private Book book;
     private Student student;
+    private boolean returned;
 
     public Loan(LocalDate date, Book book, Student student) {
         super(-1);
         this.date = date;
         this.book = book;
         this.student = student;
+        this.returned = false;
     }
 
     public Loan(Book book, Student student) {
@@ -44,6 +46,14 @@ public class Loan extends Entity {
 
     public void setStudent(Student student) {
         this.student = student;
+    }
+
+    public boolean isReturned() {
+        return returned;
+    }
+
+    public void setReturned(boolean returned) {
+        this.returned = returned;
     }
 
 }
