@@ -8,6 +8,7 @@ public class Loan extends Entity {
     private Book book;
     private Student student;
     private boolean returned;
+    private LocalDate returnDate;
 
     public Loan(LocalDate date, Book book, Student student) {
         super(-1);
@@ -15,6 +16,7 @@ public class Loan extends Entity {
         this.book = book;
         this.student = student;
         this.returned = false;
+        this.returnDate = null;
     }
 
     public Loan(Book book, Student student) {
@@ -22,6 +24,7 @@ public class Loan extends Entity {
         this.date = LocalDate.now();
         this.book = book;
         this.student = student;
+        this.returnDate = null;
     }
 
     public LocalDate getDate() {
@@ -54,6 +57,17 @@ public class Loan extends Entity {
 
     public void setReturned(boolean returned) {
         this.returned = returned;
+    }
+
+    public LocalDate getReturnDate() {
+        return returnDate;
+    }
+
+    public void setReturnDate(LocalDate returnDate) {
+        if (returnDate.isBefore(date)) {
+            throw new IllegalArgumentException("Return Date is before Lent Date.");
+        }
+        this.returnDate = returnDate;
     }
 
 }

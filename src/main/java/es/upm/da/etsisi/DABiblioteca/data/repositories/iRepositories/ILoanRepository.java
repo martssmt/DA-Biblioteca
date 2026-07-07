@@ -17,4 +17,6 @@ public interface ILoanRepository extends IRepository<Loan> {
 
     List<Loan> listLentBooks();
 
+    List<Loan> findByReturnDate(LocalDate date);
+
 }
